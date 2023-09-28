@@ -36,7 +36,7 @@ Install Pillow
 pipenv install pillow
 ```
 
-Create a database named 'django_social_media' 
+Create a database named 'django_library_management' 
 using your RDMS of choice (in this case using XAMPP Server).
 
 ![Create_a_database](/readme_images/xampp_create_database.png)
