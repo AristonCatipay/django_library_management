@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from user_profile.models import Profile
 
 # Create your views here.
 
@@ -53,6 +54,10 @@ def signup(request):
                 # Log the user in using the credentials
                 credentials = auth.authenticate(username=username, password=password)
                 auth.login(request, credentials)
+                # Create the user profile.
+                user = User.objects.get(username=username)
+                profile = Profile.objects.create(user=user)
+                profile.save()
 
                 return redirect('core:index')
         else:
