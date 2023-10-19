@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User, auth
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
 # Create your views here.
 
+@login_required
 def index(request):
     return render(request, 'core/index.html', {
         'title': 'Welcome',
@@ -60,3 +62,8 @@ def signup(request):
     return render(request, 'core/signup.html', {
         'title': 'Sign up',
     })
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('core:signin')
