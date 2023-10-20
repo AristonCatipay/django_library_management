@@ -9,8 +9,11 @@ from course.models import Course
 
 @login_required
 def index(request):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
     return render(request, 'core/index.html', {
         'title': 'Welcome',
+        'profile': profile,
     })
 
 def signin(request):
