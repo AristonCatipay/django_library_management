@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from user_profile.models import Profile
+from course.models import Course
 
 # Create your views here.
 
@@ -56,7 +57,8 @@ def signup(request):
                 auth.login(request, credentials)
                 # Create the user profile.
                 user = User.objects.get(username=username)
-                profile = Profile.objects.create(user=user)
+                course = Course.objects.get(abbreviation='NS')
+                profile = Profile.objects.create(user=user, course=course)
                 profile.save()
 
                 return redirect('core:index')
