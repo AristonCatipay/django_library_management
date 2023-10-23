@@ -36,3 +36,8 @@ def edit(request, primary_key):
         'title': 'Edit Course',
         'form': form,
     })
+
+def delete(request, primary_key):
+    course = get_object_or_404(Course, pk=primary_key)
+    course.delete()
+    return redirect('course:index')
