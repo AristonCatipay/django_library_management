@@ -10,6 +10,19 @@ def index(request):
         'courses': courses,
     })
 
+def add(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('course:index')
+    else:
+        form = CourseForm()
+    return render(request, 'course/form.html', {
+        'title': 'Add Course',
+        'form': form,
+    })
+
 def edit(request, primary_key):
     course = get_object_or_404(Course, pk=primary_key)
     if request.method == 'POST':
