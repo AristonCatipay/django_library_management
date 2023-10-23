@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course
 from .forms import CourseForm
 
@@ -10,11 +10,15 @@ def index(request):
         'courses': courses,
     })
 
-def edit(request):
+def edit(request, primary_key):
+    course = get_object_or_404(Course, pk=primary_key)
     if request.method == 'POST':
-        form = CourseForm
+        form = CourseForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return redirect('course:index')
     else:
-        form = CourseForm
+        form = CourseForm(instance=course)
     return render(request, 'course/form.html', {
         'title': 'Edit Course',
         'form': form,

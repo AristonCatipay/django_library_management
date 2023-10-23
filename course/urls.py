@@ -5,5 +5,5 @@ app_name = 'course'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('edit/', views.edit, name='edit'),
+    path('edit/<int:primary_key>/', views.edit, name='edit'),
 ]
