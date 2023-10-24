@@ -4,7 +4,7 @@
 <div class="flex justify-center">
     <div class="w-full max-w-xl p-6 bg-white border border-gray-200 rounded-md shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         <h1 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">{{ title }}</h1>
-        <form action="." method="post">
+        <form action="." method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             {% for field in form %}
