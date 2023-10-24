@@ -10,8 +10,10 @@ def index(request):
     })
 
 def detail(request, primary_key):
+    book = get_object_or_404(Book, pk=primary_key)
     return render(request, 'book/detail.html', {
         'title': 'Book Detail',
+        'book': book,
     })
 
 
