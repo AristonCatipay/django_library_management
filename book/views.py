@@ -21,3 +21,8 @@ def add(request):
         'title': 'Add Book',
         'form': form,
     })
+
+def edit(request):
+    return render(request, 'book/detail.html', {
+        'title': 'Edit Book'
+    })
