@@ -53,7 +53,17 @@ def edit(request, primary_key):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
 
-    return render(request, 'book/detail.html', {
+    book = get_object_or_404(Book, pk=primary_key)
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('book:detail', primary_key=primary_key)
+    else:
+        form = BookForm(instance=book)
+
+    return render(request, 'book/form.html', {
         'title': 'Edit Book',
         'profile': profile,
+        'form': form,
     })
