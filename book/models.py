@@ -19,7 +19,14 @@ class Book(models.Model):
     inventory = models.IntegerField()
     rack_number = models.CharField(max_length=255)
     rack_level_number = models.CharField(max_length=255)
-    author = models.ForeignKey(Author, related_name='author_id', on_delete=models.PROTECT)
 
     def __str__(self):
         return self.title
+
+class Author_List(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    author = models.ForeignKey(Author, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.book.title
+

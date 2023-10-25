@@ -7,7 +7,7 @@ FOR_IMAGE = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-l
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'cover_image', 'overview_image', 'table_of_contents_image', 'isbn_number', 'author', 'date_published', 'inventory', 'rack_number', 'rack_level_number']
+        fields = ['title', 'cover_image', 'overview_image', 'table_of_contents_image', 'isbn_number', 'date_published', 'inventory', 'rack_number', 'rack_level_number']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': INPUT_CLASSES,
@@ -22,9 +22,6 @@ class BookForm(forms.ModelForm):
                 'class': FOR_IMAGE
             }),
             'isbn_number': forms.TextInput(attrs={
-                'class': INPUT_CLASSES,
-            }),
-            'author': forms.Select(attrs={
                 'class': INPUT_CLASSES,
             }),
             'date_published': forms.SelectDateWidget(years=range(1500, 2999), attrs={
