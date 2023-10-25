@@ -24,7 +24,7 @@ class BookForm(forms.ModelForm):
             'isbn_number': forms.TextInput(attrs={
                 'class': INPUT_CLASSES,
             }),
-            'author': forms.TextInput(attrs={
+            'author': forms.Select(attrs={
                 'class': INPUT_CLASSES,
             }),
             'date_published': forms.SelectDateWidget(years=range(1500, 2999), attrs={
