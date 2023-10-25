@@ -1,5 +1,25 @@
 {% extends 'core/base.html' %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<h1>Trial Thesis</h1>
+<div class="flex justify-center">
+    <div class="w-full p-2 rounded-md border border-gray-200 dark:border-gray-700">
+        <div class="flex flex-wrap">
+            <!-- Card for each thesis. -->
+            {% for thesis in theses %}
+            <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
+                <a href="#">
+                    <div> 
+                        <img src="{{ thesis.image.url }}" class="h-48 w-full object-cover rounded-t-lg">
+                    </div>
+                    <!-- Name and Price -->
+                    <div class="p-6 rounded-b-lg">
+                        <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ thesis.title }}</h2>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ thesis.date_published }}</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
