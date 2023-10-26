@@ -41,3 +41,13 @@ class AuthorForm(forms.ModelForm):
                 'class': FOR_IMAGE
             }),
         }
+
+class AuthorListForm(forms.ModelForm):
+    class Meta:
+        model = Author_List
+        fields = ['author']
+        widgets = {
+            'author': forms.Select(attrs={
+                'class': INPUT_CLASSES,
+            })
+        }
