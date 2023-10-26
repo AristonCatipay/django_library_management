@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from user_profile.models import Profile
 from .form import BookForm
-from .models import Book
+from .models import Book, Author_List
 
 
 def index(request):
@@ -23,10 +23,12 @@ def detail(request, primary_key):
     profile = Profile.objects.get(user=user)
 
     book = get_object_or_404(Book, pk=primary_key)
+    authors = Author_List.objects.filter(book_id=primary_key)
     return render(request, 'book/detail.html', {
         'title': 'Book Detail',
         'profile': profile,
         'book': book,
+        'authors': authors,
     })
 
 
