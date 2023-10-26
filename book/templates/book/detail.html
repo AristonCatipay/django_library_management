@@ -112,8 +112,8 @@
                 </div>
                 <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                     <ul aria-labelledby="dropdownButton">
-                        <li class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-200 dark:hover:text-white">
-                            <a href="{% url 'book:edit' book.id %}">
+                        <a href="{% url 'book:edit' book.id %}">
+                            <li class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-200 dark:hover:text-white">
                                 <div class="inline-flex items-center justify-center group">
                                     <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                         <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -122,17 +122,17 @@
                                         </g>
                                       </svg>Edit Book Detail
                                 </div>
-                            </a>
-                        </li>
-                        <li class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-200 dark:hover:text-white">
-                            <a href="#">
+                            </li>
+                        </a>
+                        <a href="{% url 'book:add_author_in_author_list' book.id %}">
+                            <li class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-200 dark:hover:text-white">
                                 <div class="inline-flex items-center justify-center group">
                                     <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-3 3V5m-6-.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
-                                    </svg>Add Author
+                                    </svg>Add Author in Author List
                                 </div>
-                            </a>
-                        </li>
+                            </li>
+                        </a>
                     </ul>
                 </div>
             </div>
