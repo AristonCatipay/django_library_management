@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from user_profile.models import Profile
-from .form import BookForm
+from .form import BookForm, AuthorForm
 from .models import Book, Author_List
 
 
@@ -66,6 +66,26 @@ def edit(request, primary_key):
 
     return render(request, 'book/form.html', {
         'title': 'Edit Book',
+        'profile': profile,
+        'form': form,
+    })
+
+def add_author(request):
+    # Get the user profile.
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, request.FILES)
+        if form.is_valid():
+            author = form.save(commit=False)
+            author.name = f"{request.POST['first_name'].capitalize()}  {request.POST['last_name'].capitalize()}"
+            author.save()
+            return redirect('book:index')
+    else:
+        form = AuthorForm()
+    return render(request, 'book/form.html', {
+        'title': 'Add Author',
         'profile': profile,
         'form': form,
     })
