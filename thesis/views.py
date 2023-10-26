@@ -49,3 +49,21 @@ def add(request):
         'form': form,
     })
 
+def edit(request, primary_key):
+    # Get user profile 
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    thesis = get_object_or_404(Thesis, pk=primary_key)
+    if request.method == 'POST':
+        form = ThesisForm(request.POST, request.FILES, instance=thesis)
+        if form.is_valid():
+            form.save()
+            return redirect('thesis:detail', primary_key=primary_key)
+    else:
+        form = ThesisForm(instance=thesis)
+    return render(request, 'thesis/form.html', {
+        'title': 'Edit Thesis',
+        'profile': profile,
+        'form': form,
+    })
