@@ -22,3 +22,22 @@ class ThesisForm(forms.ModelForm):
                 'class': FOR_IMAGE,
             }),
         }
+
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ['first_name', 'last_name', 'image', 'course']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'course': forms.Select(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'image': forms.FileInput(attrs={
+                'class': FOR_IMAGE
+            }),
+        }
