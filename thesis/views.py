@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from user_profile.models import Profile
-from .models import Thesis
+from .models import Thesis, Author_List
 from .forms import ThesisForm
 
 def index(request):
@@ -14,6 +14,21 @@ def index(request):
         'title': 'Thesis',
         'profile': profile,
         'theses': theses,
+    })
+
+def detail(request, primary_key):
+    # Get user profile.
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    thesis = get_object_or_404(Thesis, pk=primary_key)
+    authors = Author_List.objects.filter(thesis_id=primary_key)
+    
+    return render(request, 'thesis/detail.html', {
+        'title': 'Thesis Detail',
+        'profile': profile,
+        'thesis': thesis,
+        'authors': authors,
     })
 
 def add(request):
@@ -33,3 +48,4 @@ def add(request):
         'profile': profile,
         'form': form,
     })
+

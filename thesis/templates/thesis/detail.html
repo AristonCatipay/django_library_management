@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="w-full p-6 md:px-10 md:py-10 rounded-md border border-gray-200 dark:border-gray-700">
+    <h2 class="mb-10 text-2xl text-white font-bold text-center">Thesis Details</h2>
+    <div class="flex flex-wrap">
+        <!-- Left side -->
+        <div class="md:basis-1/2 w-full">
+            <img class="rounded-xl object-cover" src="{{ thesis.image.url }}">
+        </div>
+        <!-- Right side -->
+        <div class="md:basis-1/2 w-full p-4 rounded-xl">            
+            <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg" id="details-tab" data-tabs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="description-tab" data-tabs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="false">Description</button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="author-tab" data-tabs-target="#author" type="button" role="tab" aria-controls="author" aria-selected="false">Authors</button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+                    </li>
+                </ul>
+            </div>
+            <div id="myTabContent">
+                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="details" role="tabpanel" aria-labelledby="details-tab">
+                    <div class="flex flex-col">
+                        <div>
+                            <h1 class="text-lg font-normal text-gray-900 dark:text-white">{{ thesis.title }}</h1>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-semibold text-gray-900 dark:text-white">{{ thesis.date_published }}</h1>
+                        </div>
+                    </div>
+                    {% if request.user == item.created_by %}
+                    <!-- If the request.user and the item.created_by is the same it means that you created this item therefor the delete button shows. -->
+                    <!-- Else it will show the contact seller button. -->
+                        <div class="mt-16 rounded-xl flex justify-center">
+                            <a href="#" class="w-full text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
+                            <a href="#" class="w-full text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete</a>
+                        </div>
+                    {% else %}
+                        <div class="mt-16 rounded-xl">
+                            <a href="@" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Message seller</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="description" role="tabpanel" aria-labelledby="description-tab">
+                    <div class="flex flex-row">
+                        <svg class="w-4 h-4 m-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 21">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6.072 10.072 2 2 6-4m3.586 4.314.9-.9a2 2 0 0 0 0-2.828l-.9-.9a2 2 0 0 1-.586-1.414V5.072a2 2 0 0 0-2-2H13.8a2 2 0 0 1-1.414-.586l-.9-.9a2 2 0 0 0-2.828 0l-.9.9a2 2 0 0 1-1.414.586H5.072a2 2 0 0 0-2 2v1.272a2 2 0 0 1-.586 1.414l-.9.9a2 2 0 0 0 0 2.828l.9.9a2 2 0 0 1 .586 1.414v1.272a2 2 0 0 0 2 2h1.272a2 2 0 0 1 1.414.586l.9.9a2 2 0 0 0 2.828 0l.9-.9a2 2 0 0 1 1.414-.586h1.272a2 2 0 0 0 2-2V13.8a2 2 0 0 1 .586-1.414Z"/>
+                        </svg>
+                        <span class="mb-1 text-medium text-gray-500 dark:text-gray-400"> Course: {{ thesis.course }}</span>
+                    </div>
+                    <div class="flex flex-row">
+                        <svg class="w-4 h-4 m-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 17V2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M5 15V1m8 18v-4"/>
+                          </svg>
+                        <span class="mb-1 text-medium text-gray-500 dark:text-gray-400"> Date Published: {{ thesis.date_published }}</span>
+                    </div>
+                </div>
+                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="author" role="tabpanel" aria-labelledby="author-tab">                    
+                    <div class="w-full">                        
+                        <div class="flow-root">
+                            {% for author in authors %}
+                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="py-3 sm:py-4">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="flex-shrink-0">
+                                                <img class="w-10 h-10 rounded-full object-cover" src="{{ author.author.image.url }}" alt="Neil image">
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="text-lg font-medium text-gray-900 truncate dark:text-white">
+                                                    {{ author.author.name }}
+                                                </p>
+                                                <!-- <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                    email@windster.com
+                                                </p> -->
+                                            </div>
+                                            <!-- <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                $320
+                                            </div> -->
+                                        </div>
+                                    </li>
+                                </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <ul aria-labelledby="dropdownButton">
+                        <a href="#">
+                            <li class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-200 dark:hover:text-white">
+                                <div class="inline-flex items-center justify-center group">
+                                    <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                          <path d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z"/>
+                                          <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                        </g>
+                                      </svg>Edit Book Detail
+                                </div>
+                            </li>
+                        </a>
+                        <a href="#">
+                            <li class="block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-500 dark:text-gray-200 dark:hover:text-white">
+                                <div class="inline-flex items-center justify-center group">
+                                    <svg class="w-4 h-4 mr-2 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-3 3V5m-6-.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+                                    </svg>Add Author in Author List
+                                </div>
+                            </li>
+                        </a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+{% endblock %}
