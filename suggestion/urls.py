@@ -6,4 +6,5 @@ app_name = 'suggestion'
 urlpatterns = [
     path('', views.index, name='index'),
     path('add/', views.add, name='add'),
+    path('edit/<int:primary_key>/', views.edit, name='edit'),
 ]
