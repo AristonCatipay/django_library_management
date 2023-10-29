@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="flex justify-center">
+    <div class="w-full max-w-3xl">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                    Book Pick up
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse the list of schedules of books pick up.</p>
+                </caption>
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Book title
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Transaction Status
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Requested by
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Pick up Date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Staff Approved
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            <span class="sr-only">Edit</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borrow_book in borrow_books %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ borrow_book.book.title }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.request_status }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.created_by.first_name }} {{ borrow_book.created_by.last_name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.pick_up_date }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.staff_approve.first_name }} {{ borrow_book.staff_approve.last_name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Borrow</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

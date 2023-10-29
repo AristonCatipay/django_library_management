@@ -64,3 +64,16 @@ def borrow_request_approve(request, primary_key):
         'profile': profile,
         'form': form,
     })
+
+def book_pick_up(request):
+    # Get user profile.
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
+    return render(request, 'borrow_book/book_pick_up.html', {
+        'title': 'Borrow Request',
+        'profile': profile,
+        'borrow_books': borrow_books,
+    })
+

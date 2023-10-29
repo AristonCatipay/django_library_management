@@ -7,7 +7,7 @@ FOR_IMAGE = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-l
 class BorrowBookRequestApproveForm(forms.ModelForm):
     class Meta:
         model = Borrow_Book
-        fields = ['pick_up_date', 'return_due_date']
+        fields = ['pick_up_date']
         widgets = {
             'pick_up_date': forms.SelectDateWidget(years=range(2022, 2999), attrs={
                 'class': INPUT_CLASSES,
