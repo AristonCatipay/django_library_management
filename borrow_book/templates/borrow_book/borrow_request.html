@@ -38,7 +38,7 @@
                             {{ borrow_book.created_by.first_name }} {{ borrow_book.created_by.last_name }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Approve</a>
+                            <a href="{% url 'borrow_book:borrow_request_approve' borrow_book.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Approve</a>
                         </td>
                     </tr>
                     {% endfor %}

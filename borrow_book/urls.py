@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('add/<int:primary_key>', views.add, name='add'),
     path('borrow-request/', views.borrow_request, name='borrow_request'),
+    path('borrow-request-approve/<int:primary_key>/', views.borrow_request_approve, name='borrow_request_approve'),
 ]

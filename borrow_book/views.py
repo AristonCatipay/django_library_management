@@ -4,6 +4,7 @@ from django.db.models import Q
 from user_profile.models import Profile
 from book.models import Book
 from .models import Borrow_Book
+from .forms import BorrowBookRequestApproveForm
 
 
 def index(request):
@@ -39,4 +40,27 @@ def borrow_request(request):
         'title': 'Borrow Request',
         'profile': profile,
         'borrow_books': borrow_books,
+    })
+
+def borrow_request_approve(request, primary_key):
+    # Get user profile.
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+
+    if request.method == 'POST':
+        form = BorrowBookRequestApproveForm(request.POST, instance=transaction)
+        if form.is_valid():
+            approve = form.save(commit=False)
+            approve.request_status = 'Approved'
+            approve.staff_approve = request.user
+            approve.save()
+            return redirect('borrow_book:borrow_request')
+    else:
+        form = BorrowBookRequestApproveForm(instance=transaction)
+    return render(request, 'borrow_book/form.html', {
+        'title': 'Borrow Book Request Approve',
+        'profile': profile,
+        'form': form,
     })
