@@ -12,8 +12,5 @@ class BorrowBookRequestApproveForm(forms.ModelForm):
             'pick_up_date': forms.SelectDateWidget(years=range(2022, 2999), attrs={
                 'class': INPUT_CLASSES,
             }),
-            'return_due_date': forms.SelectDateWidget(years=range(2022, 2999), attrs={
-                'class': INPUT_CLASSES,
-            }),
         }
         
