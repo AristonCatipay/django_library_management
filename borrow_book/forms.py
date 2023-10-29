@@ -13,4 +13,14 @@ class BorrowBookRequestApproveForm(forms.ModelForm):
                 'class': INPUT_CLASSES,
             }),
         }
+
+class BookPickUpApproveForm(forms.ModelForm):
+    class Meta:
+        model = Borrow_Book
+        fields = ['return_due_date']
+        widgets = {
+            'return_due_date': forms.SelectDateWidget(years=range(2022, 2999), attrs={
+                'class': INPUT_CLASSES,
+            }),
+        }
         
