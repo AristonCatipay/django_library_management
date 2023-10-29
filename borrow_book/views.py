@@ -18,6 +18,7 @@ def index(request):
         'borrow_books': borrow_books,
     })
 
+# This will add a book request
 def add(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
     is_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
@@ -27,3 +28,15 @@ def add(request, primary_key):
         borrow_book = Borrow_Book.objects.create(created_by=request.user, book=book)
         borrow_book.save()
         return redirect('borrow_book:index')
+
+def borrow_request(request):
+    # Get user profile.
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
+    return render(request, 'borrow_book/borrow_request.html', {
+        'title': 'Borrow Request',
+        'profile': profile,
+        'borrow_books': borrow_books,
+    })
