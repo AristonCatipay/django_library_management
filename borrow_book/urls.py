@@ -11,4 +11,5 @@ urlpatterns = [
     path('book-pick-up/', views.book_pick_up, name='book_pick_up'),
     path('book-pick-up-approve/<int:primary_key>/', views.book_pick_up_approve, name='book_pick_up_approve'),
     path('book-return/', views.book_return, name='book_return'),
+    path('book-return-approved/<int:primary_key>/', views.book_return_approved, name='book_return_approved'),
 ]

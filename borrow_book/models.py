@@ -7,19 +7,21 @@ class Borrow_Book(models.Model):
     BORROWED = 'Borrowed'
     PENDING = 'Pending'
     APPROVED = 'Approved'
+    RETURNED = 'Returned'
 
     REQUEST_STATUS_CHOICES = {
         (REQUEST, 'Request'),
         (BORROWED, 'Borrowed'),
         (PENDING, 'Pending'),
-        (APPROVED, 'Approved')
+        (APPROVED, 'Approved'),
+        (RETURNED, 'Returned'),
     }
     
     request_status = models.CharField(max_length=15, choices=REQUEST_STATUS_CHOICES, default=REQUEST)
     request_created = models.DateTimeField(auto_now_add=True)
     pick_up_date = models.DateField(null=True)
     return_due_date = models.DateField(null=True)
-    return_date = models.DateField(null=True) # Change this to returned date
+    returned_date = models.DateField(null=True)
     pending_days = models.IntegerField(null=True)
     fine = models.IntegerField(null=True)
     book = models.ForeignKey(Book, on_delete=models.PROTECT)

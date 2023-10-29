@@ -23,4 +23,14 @@ class BookPickUpApproveForm(forms.ModelForm):
                 'class': INPUT_CLASSES,
             }),
         }
+
+class BookReturnApproveForm(forms.ModelForm):
+    class Meta:
+        model = Borrow_Book
+        fields = ['pending_days']
+        widgets = {
+            'pending_days': forms.TextInput(attrs={
+                'class': INPUT_CLASSES,
+            }),
+        }
         

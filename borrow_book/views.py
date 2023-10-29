@@ -1,10 +1,11 @@
+import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import Q
 from user_profile.models import Profile
 from book.models import Book
 from .models import Borrow_Book
-from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm
+from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm, BookReturnApproveForm
 
 
 def index(request):
@@ -112,4 +113,27 @@ def book_return(request):
         'borrow_books': borrow_books,
     })
 
+def book_return_approved(request, primary_key):
+    # Get user profile.
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+
+    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+
+    if request.method == 'POST':
+        form = BookReturnApproveForm(request.POST, instance=transaction)
+        if form.is_valid():
+            approve = form.save(commit=False)
+            approve.request_status = 'Returned'
+            approve.staff_return = request.user
+            approve.returned_date = datetime.datetime.now()
+            approve.save()
+            return redirect('borrow_book:borrow_request')
+    else:
+        form = BookReturnApproveForm(instance=transaction)
+    return render(request, 'borrow_book/form.html', {
+        'title': 'Book Return',
+        'profile': profile,
+        'form': form,
+    })
 
