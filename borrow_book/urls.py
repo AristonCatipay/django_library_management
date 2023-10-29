@@ -10,4 +10,5 @@ urlpatterns = [
     path('borrow-request-approve/<int:primary_key>/', views.borrow_request_approve, name='borrow_request_approve'),
     path('book-pick-up/', views.book_pick_up, name='book_pick_up'),
     path('book-pick-up-approve/<int:primary_key>/', views.book_pick_up_approve, name='book_pick_up_approve'),
+    path('book-return/', views.book_return, name='book_return'),
 ]
