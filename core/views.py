@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from user_profile.models import Profile
 from course.models import Course
-
+from .decorators import unauthenticated_user
 # Create your views here.
 
 @login_required
@@ -16,6 +16,7 @@ def index(request):
         'profile': profile,
     })
 
+@unauthenticated_user
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -35,6 +36,7 @@ def signin(request):
         'title': 'Sign in',
     })
 
+@unauthenticated_user
 def signup(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
