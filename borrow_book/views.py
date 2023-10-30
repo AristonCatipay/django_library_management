@@ -1,4 +1,3 @@
-import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -6,7 +5,7 @@ from user_profile.models import Profile
 from book.models import Book
 from .models import Borrow_Book
 from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm, BookReturnApproveForm
-
+from datetime import date
 
 def index(request):
     # Get user profile.
@@ -126,9 +125,19 @@ def book_return_approved(request, primary_key):
             approve = form.save(commit=False)
             approve.request_status = 'Returned'
             approve.staff_return = request.user
-            approve.returned_date = datetime.datetime.now()
-            approve.save()
-            return redirect('borrow_book:borrow_request')
+            approve.returned_date = date.today()
+            delta = approve.returned_date - approve.return_due_date 
+
+            if delta.days > 0:
+                approve.pending_days = delta.days
+                approve.fine = approve.pending_days * 20
+                approve.save()
+                return redirect('borrow_book:borrow_request')
+            else:
+                approve.pending_days = 0
+                approve.fine = 0
+                approve.save()
+                return redirect('borrow_book:borrow_request')
     else:
         form = BookReturnApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
