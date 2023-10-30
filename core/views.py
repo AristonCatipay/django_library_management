@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User, auth, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -64,6 +64,9 @@ def signup(request):
                 user = User.objects.get(username=username)
                 course = Course.objects.get(abbreviation='NS')
                 profile = Profile.objects.create(user=user, course=course)
+                # Add user to the student group
+                group = Group.objects.get(name='student')
+                user.groups.add(group)
                 profile.save()
 
                 return redirect('core:index')
