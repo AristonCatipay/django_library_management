@@ -113,36 +113,19 @@ def book_return(request):
     })
 
 def book_return_approved(request, primary_key):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-
     transaction = get_object_or_404(Borrow_Book, pk=primary_key)
 
-    if request.method == 'POST':
-        form = BookReturnApproveForm(request.POST, instance=transaction)
-        if form.is_valid():
-            approve = form.save(commit=False)
-            approve.request_status = 'Returned'
-            approve.staff_return = request.user
-            approve.returned_date = date.today()
-            delta = approve.returned_date - approve.return_due_date 
-
-            if delta.days > 0:
-                approve.pending_days = delta.days
-                approve.fine = approve.pending_days * 20
-                approve.save()
-                return redirect('borrow_book:borrow_request')
-            else:
-                approve.pending_days = 0
-                approve.fine = 0
-                approve.save()
-                return redirect('borrow_book:borrow_request')
+    transaction.request_status = 'Returned'
+    transaction.staff_return = request.user
+    transaction.returned_date = date.today()
+    delta = transaction.returned_date - transaction.return_due_date
+    if delta.days > 0:
+        transaction.pending_days = delta.days
+        transaction.fine = transaction.pending_days * 20
+        transaction.save()
+        return redirect('borrow_book:borrow_request')
     else:
-        form = BookReturnApproveForm(instance=transaction)
-    return render(request, 'borrow_book/form.html', {
-        'title': 'Book Return',
-        'profile': profile,
-        'form': form,
-    })
-
+        transaction.pending_days = 0
+        transaction.fine = 0
+        transaction.save()
+        return redirect('borrow_book:borrow_request')
