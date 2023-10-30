@@ -6,7 +6,7 @@
         <div class="flex flex-wrap">
             <!-- Card for each thesis. -->
             {% for thesis in theses %}
-            <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div class="w-full md:max-w-xs m-1 rounded-lg border border-gray-200 dark:border-gray-700">
                 <a href="{% url 'thesis:detail' thesis.id %}">
                     <div> 
                         <img src="{{ thesis.image.url }}" class="h-48 w-full object-cover rounded-t-lg">

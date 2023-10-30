@@ -6,7 +6,7 @@
         <div class="flex flex-wrap">
             <!-- Card for each book. -->
             {% for book in books %}
-            <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div class="w-full md:max-w-xs m-1 rounded-lg border border-gray-200 dark:border-gray-700">
                 <a href="{% url 'book:detail' book.id %}">
                     <div> 
                         <img src="{{ book.cover_image.url }}" class="h-48 w-full object-cover rounded-t-lg">
