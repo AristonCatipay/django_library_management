@@ -8,18 +8,21 @@ def index(request):
     # Get the user profile.
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     theses = Thesis.objects.all()
     return render(request, 'thesis/index.html', {
         'title': 'Thesis',
         'profile': profile,
         'theses': theses,
+        'is_staff': is_staff,
     })
 
 def detail(request, primary_key):
     # Get user profile.
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     thesis = get_object_or_404(Thesis, pk=primary_key)
     authors = Author_List.objects.filter(thesis_id=primary_key)
@@ -29,12 +32,14 @@ def detail(request, primary_key):
         'profile': profile,
         'thesis': thesis,
         'authors': authors,
+        'is_staff': is_staff,
     })
 
 def add(request):
     # Get the user profile.
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = ThesisForm(request.POST, request.FILES)
@@ -47,12 +52,14 @@ def add(request):
         'title': 'Thesis',
         'profile': profile,
         'form': form,
+        'is_staff': is_staff,
     })
 
 def edit(request, primary_key):
     # Get user profile 
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     thesis = get_object_or_404(Thesis, pk=primary_key)
     if request.method == 'POST':
@@ -66,12 +73,14 @@ def edit(request, primary_key):
         'title': 'Edit Thesis',
         'profile': profile,
         'form': form,
+        'is_staff': is_staff,
     })
 
 def add_author(request):
     # Get user profile
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = AuthorForm(request.POST, request.FILES)
@@ -87,12 +96,14 @@ def add_author(request):
         'title': 'Add Author',
         'profile': profile,
         'form': form,
+        'is_staff': is_staff,
     })
 
 def add_author_in_author_list(request, primary_key):
     # Get the user profile.
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = AuthorListForm(request.POST)
@@ -107,4 +118,5 @@ def add_author_in_author_list(request, primary_key):
         'title': 'Add Author in Author List',
         'profile': profile,
         'form': form,
+        'is_staff': is_staff,
     })
