@@ -60,9 +60,11 @@
                     <li class="mr-2" role="presentation">
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="author-tab" data-tabs-target="#author" type="button" role="tab" aria-controls="author" aria-selected="false">Authors</button>
                     </li>
+                    {% if is_staff %}
                     <li class="mr-2" role="presentation">
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
             <div id="myTabContent">
@@ -140,6 +142,7 @@
                         </div>
                     </div>
                 </div>
+                {% if is_staff %}
                 <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                     <ul aria-labelledby="dropdownButton">
                         <a href="{% url 'book:edit' book.id %}">
@@ -165,6 +168,7 @@
                         </a>
                     </ul>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
