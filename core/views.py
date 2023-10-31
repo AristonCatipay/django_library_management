@@ -4,12 +4,13 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from user_profile.models import Profile
 from course.models import Course
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user, allow_certain_groups
 from book.models import Book
 from thesis.models import Thesis
 # Create your views here.
 
 @login_required
+@allow_certain_groups(allowed_groups=['staff'])
 def index(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
@@ -42,7 +43,7 @@ def signin(request):
         if user is not None:
             # User is authenticated.
             auth.login(request, user)
-            return redirect('core:index')
+            return redirect('book:index')
         else: 
             # Invalid credentials
             messages.info(request, 'Invalid credentials.')
@@ -85,7 +86,7 @@ def signup(request):
                 user.groups.add(group)
                 profile.save()
 
-                return redirect('core:index')
+                return redirect('book:index')
         else:
             messages.info(request, 'Password don\'t match')
             return redirect('core:signup')
@@ -98,3 +99,19 @@ def signup(request):
 def logout(request):
     auth.logout(request)
     return redirect('core:signin')
+
+@login_required
+@allow_certain_groups(allowed_groups=['staff'])
+def users(request):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
+
+    users = User.objects.all()
+
+    return render(request, 'core/users.html', {
+        'title': 'Users',
+        'profile': profile,
+        'is_staff': is_staff,
+        'users': users,
+    })
