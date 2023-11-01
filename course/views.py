@@ -1,12 +1,19 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+from user_profile.models import Profile
 from .models import Course
 from .forms import CourseForm
 
 def index(request):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
     courses = Course.objects.all()
 
     return render(request, 'course/index.html', {
         'title': 'Course',
+        'profile': profile,
+        'is_staff': is_staff,
         'courses': courses,
     })
 
