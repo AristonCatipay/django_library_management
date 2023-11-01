@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'thesis',
     'suggestion',
     'borrow_book',
+    'review',
 ]
 
 MIDDLEWARE = [
