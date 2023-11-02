@@ -18,6 +18,10 @@ def index(request):
     })
 
 def add(request):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
+
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -27,6 +31,8 @@ def add(request):
         form = CourseForm()
     return render(request, 'course/form.html', {
         'title': 'Add Course',
+        'profile': profile,
+        'is_staff': is_staff,
         'form': form,
     })
 
