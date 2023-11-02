@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from user_profile.models import Profile
 from .models import Thesis, Author_List
 from .forms import ThesisForm, AuthorForm, AuthorListForm
@@ -11,6 +12,10 @@ def index(request):
     is_staff = True if user.groups.filter(name='staff') else False
 
     theses = Thesis.objects.all()
+
+    query = request.GET.get('query', '')
+    if query: 
+        theses = Thesis.objects.filter(Q(title__icontains=query))
     return render(request, 'thesis/index.html', {
         'title': 'Thesis',
         'profile': profile,
