@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from user_profile.models import Profile
+from course.models import Course
 from .models import Thesis, Author_List
 from .forms import ThesisForm, AuthorForm, AuthorListForm
 
@@ -12,15 +13,21 @@ def index(request):
     is_staff = True if user.groups.filter(name='staff') else False
 
     theses = Thesis.objects.all()
+    courses = Course.objects.all()
 
     query = request.GET.get('query', '')
+    course_id = request.GET.get('course', 0)
+
+    if course_id:
+        theses = Thesis.objects.filter(course=course_id)
     if query: 
         theses = Thesis.objects.filter(Q(title__icontains=query))
     return render(request, 'thesis/index.html', {
         'title': 'Thesis',
         'profile': profile,
-        'theses': theses,
         'is_staff': is_staff,
+        'theses': theses,
+        'courses': courses,
     })
 
 def detail(request, primary_key):
