@@ -37,6 +37,10 @@ def add(request):
     })
 
 def edit(request, primary_key):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
+
     course = get_object_or_404(Course, pk=primary_key)
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
@@ -47,6 +51,8 @@ def edit(request, primary_key):
         form = CourseForm(instance=course)
     return render(request, 'course/form.html', {
         'title': 'Edit Course',
+        'profile': profile,
+        'is_staff': is_staff,
         'form': form,
     })
 
