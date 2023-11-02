@@ -9,15 +9,18 @@ User = get_user_model()
 def index(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     return render(request, 'user_profile/index.html', {
         'title': 'Profile',
         'profile': profile,
+        'is_staff': is_staff,
     })
 
 def edit(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -67,11 +70,13 @@ def edit(request):
     return render(request, 'user_profile/edit.html', {
         'title': 'Edit Profile',
         'profile': profile,
+        'is_staff': is_staff,
     })
 
 def change_password(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+    is_staff = True if user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         new_password = request.POST['new_password'] 
@@ -89,4 +94,5 @@ def change_password(request):
     return render(request, 'user_profile/change_password.html', {
         'title': 'Change Password',
         'profile': profile,
+        'is_staff': is_staff,
     })
