@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.db.models import Q
 from user_profile.models import Profile
 from .forms import BookForm, AuthorForm, AuthorListForm
 from .models import Book, Author_List
@@ -10,8 +11,11 @@ def index(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
     is_staff = True if user.groups.filter(name='staff') else False
-
     books = Book.objects.all()
+
+    query = request.GET.get('query', '')
+    if query: 
+        books = Book.objects.filter(Q(title__icontains=query) | Q(isbn_number__icontains=query))
     return render(request, 'book/index.html', {
         'title': 'Book',
         'profile': profile,
