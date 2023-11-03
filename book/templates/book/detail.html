@@ -60,6 +60,9 @@
                     <li class="mr-2" role="presentation">
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="author-tab" data-tabs-target="#author" type="button" role="tab" aria-controls="author" aria-selected="false">Authors</button>
                     </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="review-tab" data-tabs-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">Review</button>
+                    </lireview
                     {% if is_staff %}
                     <li class="mr-2" role="presentation">
                         <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
@@ -120,22 +123,33 @@
                     </div>
                 </div>
                 <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="author" role="tabpanel" aria-labelledby="author-tab">                                         
-                    {% for author in authors %}
-                        <ul role="list">
-                            <li class="py-1">
-                                <div class="flex items-center space-x-4">
-                                    <div class="flex-shrink-0">
-                                        <img class="w-8 h-8 rounded-full object-cover" src="{{ author.author.author_image.url }}" alt="Neil image">
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-medium text-gray-900 truncate dark:text-gray-300">
-                                            {{ author.author.name }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    {% endfor %}
+                    <ol class="relative border-l border-gray-200 dark:border-gray-700">                  
+                        {% for author in authors %}                        
+                        <li class="mb-2 ml-6">            
+                            <span class="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3">
+                                <img class="rounded-full shadow-lg" src="{{ author.author.author_image.url }}" alt="Bonnie image"/>
+                            </span>
+                            <div class="items-center justify-between p-2 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-300">{{ author.author.name }}</div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="review" role="tabpanel" aria-labelledby="review-tab">                                       
+                    <ol class="relative border-l border-gray-200 dark:border-gray-700">                  
+                        {% for review in book_reviews %}                        
+                        <li class="mb-2 ml-6">            
+                            <span class="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3">
+                                <img class="rounded-full shadow-lg" src="{{ review.review.profile.image.url }}" alt="Bonnie image"/>
+                            </span>
+                            <div class="items-center justify-between p-2 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
+                                <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">{{ review.review.user.first_name }} {{ review.review.user.last_name }}</time>
+                                <div class="text-sm font-normal text-gray-500 dark:text-gray-300">{{ review.review.review }}</div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ol>
                 </div>
                 {% if is_staff %}
                 <div class="hidden p-3 rounded-lg border border-gray-200 dark:border-gray-700" id="settings" role="tabpanel" aria-labelledby="settings-tab">

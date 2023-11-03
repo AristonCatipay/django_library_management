@@ -4,6 +4,7 @@ from django.db.models import Q
 from user_profile.models import Profile
 from .forms import BookForm, AuthorForm, AuthorListForm
 from .models import Book, Author_List
+from review.models import Reviewed_Item
 
 
 def index(request):
@@ -31,12 +32,14 @@ def detail(request, primary_key):
 
     book = get_object_or_404(Book, pk=primary_key)
     authors = Author_List.objects.filter(book_id=primary_key)
+    book_reviews = Reviewed_Item.objects.filter(book_id=primary_key)
     return render(request, 'book/detail.html', {
         'title': 'Book Detail',
         'profile': profile,
+        'is_staff': is_staff,
         'book': book,
         'authors': authors,
-        'is_staff': is_staff,
+        'book_reviews': book_reviews,
     })
 
 
