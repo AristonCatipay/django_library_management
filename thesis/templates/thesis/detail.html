@@ -64,20 +64,16 @@
                 </div>
                 <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="author" role="tabpanel" aria-labelledby="author-tab">                                         
                     {% for author in authors %}
-                        <ul role="list">
-                            <li class="py-1">
-                                <div class="flex items-center space-x-4">
-                                    <div class="flex-shrink-0">
-                                        <img class="w-8 h-8 rounded-full object-cover" src="{{ author.author.image.url }}" alt="Neil image">
-                                    </div>
-                                    <div class="flex-1 min-w-0">
-                                        <p class="text-medium text-gray-900 truncate dark:text-gray-300">
-                                            {{ author.author.name }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="flex items-center space-x-2 mb-2">
+                            <div class="flex-shrink-0">
+                                <img class="w-8 h-8 rounded-full object-cover" src="{{ author.author.image.url }}" alt="Neil image">
+                            </div>
+                            <div class="flex-1 min-w-0 items-center justify-between p-2 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
+                                <p class="text-medium text-gray-900 truncate dark:text-gray-300">
+                                    {{ author.author.name }}
+                                </p>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
                 {% if is_staff %}

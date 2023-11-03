@@ -122,19 +122,19 @@
                         <span class="mb-1 text-md text-gray-500 dark:text-gray-300"> Rack Level: {{ book.rack_level_number }}</span>
                     </div>
                 </div>
-                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="author" role="tabpanel" aria-labelledby="author-tab">                                         
-                    <ol class="relative border-l border-gray-200 dark:border-gray-700">                  
-                        {% for author in authors %}                        
-                        <li class="mb-2 ml-6">            
-                            <span class="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3">
-                                <img class="rounded-full shadow-lg" src="{{ author.author.author_image.url }}" alt="Bonnie image"/>
-                            </span>
-                            <div class="items-center justify-between p-2 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
-                                <div class="text-sm font-normal text-gray-500 dark:text-gray-300">{{ author.author.name }}</div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                    </ol>
+                <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="author" role="tabpanel" aria-labelledby="author-tab">                                                         
+                    {% for author in authors %}                        
+                    <div class="flex items-center space-x-2 mb-2">
+                        <div class="flex-shrink-0">
+                            <img class="w-8 h-8 rounded-full object-cover" src="{{ author.author.author_image.url }}" alt="Neil image">
+                        </div>
+                        <div class="flex-1 min-w-0 items-center justify-between p-2 bg-white border border-gray-200 rounded-lg shadow-sm sm:flex dark:bg-gray-700 dark:border-gray-600">
+                            <p class="text-medium text-gray-900 truncate dark:text-gray-300">
+                                {{ author.author.name }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
                 <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="review" role="tabpanel" aria-labelledby="review-tab">                                       
                     <ol class="relative border-l border-gray-200 dark:border-gray-700">                  
