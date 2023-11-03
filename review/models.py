@@ -1,16 +1,16 @@
+from django.contrib.auth.models import User
 from django.db import models
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+from book.models import Book
+from user_profile.models import Profile
 
 class Review(models.Model):
     review = models.CharField(max_length=255)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
 class Reviewed_Item(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    # Type: Books, Thesis
-    object_id = models.PositiveIntegerField()
-    # ID of that object
-    # Assuming every table has a primary key and all primary key are positive.
-    content_object = GenericForeignKey()
-    # Getting the actual object.
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    
+
