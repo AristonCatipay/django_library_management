@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path('__reload__/', include('django_browser_reload.urls')),
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('user-profile/', include('user_profile.urls')),
