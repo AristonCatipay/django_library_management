@@ -9,6 +9,12 @@ from book.models import Book
 from thesis.models import Thesis
 # Create your views here.
 
+def home(request):
+    auth.logout(request)
+    return render(request, 'core/home.html', {
+        'title': 'Home',
+    })
+
 @login_required
 @allow_certain_groups(allowed_groups=['staff'])
 def index(request):
