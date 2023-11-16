@@ -7,20 +7,15 @@ from . models import Profile
 User = get_user_model()
 
 def index(request):
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     return render(request, 'user_profile/index.html', {
         'title': 'Profile',
-        'profile': profile,
         'is_staff': is_staff,
     })
 
 def edit(request):
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -34,57 +29,54 @@ def edit(request):
             # If the user didn't upload their own image
             # Use the default profile image.
 
-            image = profile.image
+            image = request.user.profile.image
 
             # Update profile model
-            profile.image = image
-            profile.student_number = student_number
-            profile.student_contact_no = student_contact_no
-            profile.save()
+            request.user.profile.image = image
+            request.user.profile.student_number = student_number
+            request.user.profile.student_contact_no = student_contact_no
+            request.user.profile.save()
 
             # Updated the user model 
-            user.first_name = first_name
-            user.last_name = last_name
-            user.username = username
-            user.email = email
-            user.save()
+            request.user.first_name = first_name
+            request.user.last_name = last_name
+            request.user.username = username
+            request.user.email = email
+            request.user.save()
 
         if request.FILES.get('image') != None:
             image = request.FILES.get('image')
 
             # Update profile model
-            profile.image = image
-            profile.student_number = student_number
-            profile.student_contact_no = student_contact_no
-            profile.save()
+            request.user.profile.image = image
+            request.user.profile.student_number = student_number
+            request.user.profile.student_contact_no = student_contact_no
+            request.user.profile.save()
 
             # Updated the user model 
-            user.first_name = first_name
-            user.last_name = last_name
-            user.username = username
-            user.email = email
-            user.save()
+            request.user.first_name = first_name
+            request.user.last_name = last_name
+            request.user.username = username
+            request.user.email = email
+            request.user.save()
 
         return redirect('profile:edit')
 
     return render(request, 'user_profile/edit.html', {
         'title': 'Edit Profile',
-        'profile': profile,
         'is_staff': is_staff,
     })
 
 def change_password(request):
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         new_password = request.POST['new_password'] 
         confirm_new_password = request.POST['confirm_new_password'] 
 
         if new_password == confirm_new_password:
-            user.set_password(new_password)
-            user.save()
+            request.user.set_password(new_password)
+            request.user.save()
             messages.info(request, 'Successful')
             return redirect('core:signin')
         else:
@@ -93,6 +85,5 @@ def change_password(request):
             
     return render(request, 'user_profile/change_password.html', {
         'title': 'Change Password',
-        'profile': profile,
         'is_staff': is_staff,
     })
