@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.http import FileResponse, Http404
 from user_profile.models import Profile
 from course.models import Course
 from .models import Thesis, Author_List
@@ -46,6 +47,13 @@ def detail(request, primary_key):
         'authors': authors,
         'is_staff': is_staff,
     })
+
+def view_file(request, file_location):
+    try:
+        return FileResponse(open(file_location, 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()
+    
 
 def add(request):
     # Get the user profile.
