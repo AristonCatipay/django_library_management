@@ -7,7 +7,7 @@ FOR_IMAGE = 'block w-full text-sm text-gray-900 border border-gray-300 rounded-l
 class ThesisForm(forms.ModelForm):
     class Meta: 
         model = Thesis
-        fields = ['title', 'date_published', 'course', 'image']
+        fields = ['title', 'date_published', 'course', 'image', 'file']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': INPUT_CLASSES
@@ -19,6 +19,9 @@ class ThesisForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
             'image': forms.FileInput(attrs={
+                'class': FOR_IMAGE,
+            }),
+            'file': forms.FileInput(attrs={
                 'class': FOR_IMAGE,
             }),
         }

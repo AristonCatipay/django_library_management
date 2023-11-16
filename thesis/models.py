@@ -16,6 +16,7 @@ class Thesis(models.Model):
     date_published = models.DateField(null=True)
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
     image = models.ImageField(upload_to='thesis_images', default='default_thesis_image.jpg')
+    file = models.FileField(upload_to='thesis_files')
 
     def __str__(self):
         return self.title
