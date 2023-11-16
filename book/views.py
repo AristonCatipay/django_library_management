@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
 from django.db.models import Q
-from user_profile.models import Profile
 from .forms import BookForm, AuthorForm, AuthorListForm
 from .models import Book, Author_List
 from review.models import Reviewed_Item

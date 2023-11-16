@@ -1,8 +1,6 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.http import FileResponse, Http404
-from user_profile.models import Profile
 from course.models import Course
 from .models import Thesis, Author_List
 from .forms import ThesisForm, AuthorForm, AuthorListForm

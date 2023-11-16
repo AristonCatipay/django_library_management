@@ -1,10 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
 from django.contrib import messages
-
-from . models import Profile
-
-User = get_user_model()
 
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False

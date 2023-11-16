@@ -1,6 +1,4 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from user_profile.models import Profile
 from .models import Course
 from .forms import CourseForm
 
