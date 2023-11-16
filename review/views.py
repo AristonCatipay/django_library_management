@@ -6,18 +6,15 @@ from user_profile.models import Profile
 from book.models import Book
 
 def add(request, book_id):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = BookReviewForm(request.POST)
         if form.is_valid():
             # Save the review
             review = form.save(commit=False)
-            review.user = user
-            review.profile = profile
+            review.user = request.user
+            review.profile = request.user.profile
             review.save()
 
             # Set the review to the book.
@@ -29,7 +26,6 @@ def add(request, book_id):
         form = BookReviewForm()
     return render(request, 'review/form.html', {
         'title': 'Add Review',
-        'profile': profile,
         'is_staff': is_staff,
         'form': form,
     })
