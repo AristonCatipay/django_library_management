@@ -1,28 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
-from user_profile.models import Profile
 from .models import Suggestion
 from .form import SuggestionForm
 
 def index(request):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     suggestions = Suggestion.objects.filter(created_by=request.user)
     return render(request, 'suggestion/index.html', {
         'title': 'Suggestion',
-        'profile': profile,
         'suggestions': suggestions,
         'is_staff': is_staff,
     })
 
 def add(request):
-    # Get user profile
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = SuggestionForm(request.POST)
@@ -35,16 +26,12 @@ def add(request):
         form = SuggestionForm()
     return render(request, 'suggestion/form.html', {
         'title': 'Add Suggestion',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def edit(request, primary_key):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     suggestion = get_object_or_404(Suggestion, id=primary_key)
     if request.method == 'POST':
@@ -57,7 +44,6 @@ def edit(request, primary_key):
 
     return render(request, 'suggestion/form.html', {
         'title': 'Edit Suggestion',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
