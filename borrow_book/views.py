@@ -1,22 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
 from django.db.models import Q
-from user_profile.models import Profile
 from book.models import Book
 from .models import Borrow_Book
 from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm
 from datetime import date
 
 def index(request):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     borrow_books = Borrow_Book.objects.filter(created_by=request.user)
     return render(request, 'borrow_book/index.html', {
-        'title': 'Borrowed Books', 
-        'profile': profile,
+        'title': 'Borrowed Books',
         'borrow_books': borrow_books,
         'is_staff': is_staff,
     })
@@ -33,24 +27,17 @@ def add(request, primary_key):
         return redirect('borrow_book:index')
 
 def borrow_request(request):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
     return render(request, 'borrow_book/borrow_request.html', {
         'title': 'Borrow Request',
-        'profile': profile,
         'borrow_books': borrow_books,
         'is_staff': is_staff,
     })
 
 def borrow_request_approve(request, primary_key):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     transaction = get_object_or_404(Borrow_Book, pk=primary_key)
 
@@ -66,30 +53,22 @@ def borrow_request_approve(request, primary_key):
         form = BorrowBookRequestApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
         'title': 'Borrow Book Request Approve',
-        'profile': profile,
         'is_staff': is_staff,
         'form': form,
     })
 
 def book_pick_up(request):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
     return render(request, 'borrow_book/book_pick_up.html', {
         'title': 'Borrow Request',
-        'profile': profile,
         'borrow_books': borrow_books,
         'is_staff': is_staff,
     })
 
 def book_pick_up_approve(request, primary_key):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     transaction = get_object_or_404(Borrow_Book, pk=primary_key)
 
@@ -105,21 +84,16 @@ def book_pick_up_approve(request, primary_key):
         form = BookPickUpApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
         'title': 'Book Pick Up Approve',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def book_return(request):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Borrowed')
     return render(request, 'borrow_book/return_book.html', {
         'title': 'Borrow Request',
-        'profile': profile,
         'borrow_books': borrow_books,
         'is_staff': is_staff,
     })
