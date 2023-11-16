@@ -8,10 +8,7 @@ from review.models import Reviewed_Item
 
 
 def index(request):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
     books = Book.objects.all()
 
     query = request.GET.get('query', '')
@@ -19,23 +16,18 @@ def index(request):
         books = Book.objects.filter(Q(title__icontains=query) | Q(isbn_number__icontains=query))
     return render(request, 'book/index.html', {
         'title': 'Book',
-        'profile': profile,
         'books': books,
         'is_staff': is_staff,
     })
 
 def detail(request, primary_key):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     book = get_object_or_404(Book, pk=primary_key)
     authors = Author_List.objects.filter(book_id=primary_key)
     book_reviews = Reviewed_Item.objects.filter(book_id=primary_key)
     return render(request, 'book/detail.html', {
         'title': 'Book Detail',
-        'profile': profile,
         'is_staff': is_staff,
         'book': book,
         'authors': authors,
@@ -44,10 +36,7 @@ def detail(request, primary_key):
 
 
 def add(request):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
@@ -58,16 +47,12 @@ def add(request):
         form = BookForm()
     return render(request, 'book/form.html', {
         'title': 'Add Book',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def edit(request, primary_key):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     book = get_object_or_404(Book, pk=primary_key)
     if request.method == 'POST':
@@ -80,16 +65,12 @@ def edit(request, primary_key):
 
     return render(request, 'book/form.html', {
         'title': 'Edit Book',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def add_author(request):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = AuthorForm(request.POST, request.FILES)
@@ -102,16 +83,12 @@ def add_author(request):
         form = AuthorForm()
     return render(request, 'book/form.html', {
         'title': 'Add Author',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def add_author_in_author_list(request, primary_key):
-     # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = AuthorListForm(request.POST)
@@ -125,7 +102,6 @@ def add_author_in_author_list(request, primary_key):
 
     return render(request, 'book/form.html', {
         'title': 'Add Author in Author Lists',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
