@@ -8,10 +8,7 @@ from .models import Thesis, Author_List
 from .forms import ThesisForm, AuthorForm, AuthorListForm
 
 def index(request):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     theses = Thesis.objects.all()
     courses = Course.objects.all()
@@ -25,24 +22,19 @@ def index(request):
         theses = Thesis.objects.filter(Q(title__icontains=query))
     return render(request, 'thesis/index.html', {
         'title': 'Thesis',
-        'profile': profile,
         'is_staff': is_staff,
         'theses': theses,
         'courses': courses,
     })
 
 def detail(request, primary_key):
-    # Get user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     thesis = get_object_or_404(Thesis, pk=primary_key)
     authors = Author_List.objects.filter(thesis_id=primary_key)
     
     return render(request, 'thesis/detail.html', {
         'title': 'Thesis Detail',
-        'profile': profile,
         'thesis': thesis,
         'authors': authors,
         'is_staff': is_staff,
@@ -56,10 +48,7 @@ def view_file(request, file_location):
     
 
 def add(request):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = ThesisForm(request.POST, request.FILES)
@@ -70,16 +59,12 @@ def add(request):
         form = ThesisForm()
     return render(request, 'thesis/form.html', {
         'title': 'Thesis',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def edit(request, primary_key):
-    # Get user profile 
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     thesis = get_object_or_404(Thesis, pk=primary_key)
     if request.method == 'POST':
@@ -91,16 +76,12 @@ def edit(request, primary_key):
         form = ThesisForm(instance=thesis)
     return render(request, 'thesis/form.html', {
         'title': 'Edit Thesis',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def add_author(request):
-    # Get user profile
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = AuthorForm(request.POST, request.FILES)
@@ -114,16 +95,12 @@ def add_author(request):
 
     return render(request, 'thesis/form.html', {
         'title': 'Add Author',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
 
 def add_author_in_author_list(request, primary_key):
-    # Get the user profile.
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
+    is_staff = True if request.user.groups.filter(name='staff') else False
 
     if request.method == 'POST':
         form = AuthorListForm(request.POST)
@@ -136,7 +113,6 @@ def add_author_in_author_list(request, primary_key):
         form = AuthorListForm()
     return render(request, 'thesis/form.html', {
         'title': 'Add Author in Author List',
-        'profile': profile,
         'form': form,
         'is_staff': is_staff,
     })
