@@ -1,7 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from core.decorators import allow_certain_groups
 from .models import Course
 from .forms import CourseForm
 
+@login_required
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
     courses = Course.objects.all()
@@ -12,6 +15,8 @@ def index(request):
         'courses': courses,
     })
 
+@login_required
+@allow_certain_groups(['staff'])
 def add(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -28,6 +33,8 @@ def add(request):
         'form': form,
     })
 
+@login_required
+@allow_certain_groups(['staff'])
 def edit(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -45,6 +52,8 @@ def edit(request, primary_key):
         'form': form,
     })
 
+@login_required
+@allow_certain_groups(['staff'])
 def delete(request, primary_key):
     course = get_object_or_404(Course, pk=primary_key)
     course.delete()
