@@ -1,10 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.http import FileResponse, Http404
+from core.decorators import allow_certain_groups
 from course.models import Course
 from .models import Thesis, Author_List
 from .forms import ThesisForm, AuthorForm, AuthorListForm
 
+@login_required
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -25,6 +28,7 @@ def index(request):
         'courses': courses,
     })
 
+@login_required
 def detail(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -38,13 +42,15 @@ def detail(request, primary_key):
         'is_staff': is_staff,
     })
 
+@login_required
 def view_file(request, file_location):
     try:
         return FileResponse(open(file_location, 'rb'), content_type='application/pdf')
     except FileNotFoundError:
         raise Http404()
     
-
+@login_required
+@allow_certain_groups(['staff'])
 def add(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -61,6 +67,8 @@ def add(request):
         'is_staff': is_staff,
     })
 
+@login_required
+@allow_certain_groups(['staff'])
 def edit(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -78,6 +86,8 @@ def edit(request, primary_key):
         'is_staff': is_staff,
     })
 
+@login_required
+@allow_certain_groups(['staff'])
 def add_author(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -97,6 +107,8 @@ def add_author(request):
         'is_staff': is_staff,
     })
 
+@login_required
+@allow_certain_groups(['staff'])
 def add_author_in_author_list(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
