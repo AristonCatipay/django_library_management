@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+@login_required
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -9,6 +11,7 @@ def index(request):
         'is_staff': is_staff,
     })
 
+@login_required
 def edit(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -62,6 +65,7 @@ def edit(request):
         'is_staff': is_staff,
     })
 
+@login_required
 def change_password(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
