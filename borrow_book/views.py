@@ -1,10 +1,13 @@
+from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from book.models import Book
+from core.decorators import allow_certain_groups
 from .models import Borrow_Book
 from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm
-from datetime import date
 
+@login_required()
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -15,6 +18,7 @@ def index(request):
         'is_staff': is_staff,
     })
 
+@login_required()
 # This will add a book request
 def add(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
@@ -26,6 +30,7 @@ def add(request, primary_key):
         borrow_book.save()
         return redirect('borrow_book:index')
 
+@login_required()
 def borrow_request(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -36,6 +41,8 @@ def borrow_request(request):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(['staff'])
 def borrow_request_approve(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -57,6 +64,8 @@ def borrow_request_approve(request, primary_key):
         'form': form,
     })
 
+@login_required()
+@allow_certain_groups(['staff'])
 def book_pick_up(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -67,6 +76,8 @@ def book_pick_up(request):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(['staff'])
 def book_pick_up_approve(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -88,6 +99,8 @@ def book_pick_up_approve(request, primary_key):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(['staff'])
 def book_return(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -98,6 +111,8 @@ def book_return(request):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(['staff'])
 def book_return_approved(request, primary_key):
     transaction = get_object_or_404(Borrow_Book, pk=primary_key)
 
