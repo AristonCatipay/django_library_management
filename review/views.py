@@ -1,10 +1,10 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import BookReviewForm
 from .models import Reviewed_Item
-from user_profile.models import Profile
 from book.models import Book
 
+@login_required
 def add(request, book_id):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
