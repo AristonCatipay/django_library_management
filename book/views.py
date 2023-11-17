@@ -1,10 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .forms import BookForm, AuthorForm, AuthorListForm
 from .models import Book, Author_List
+from core.decorators import allow_certain_groups
 from review.models import Reviewed_Item
 
-
+@login_required()
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
     books = Book.objects.all()
@@ -18,6 +20,7 @@ def index(request):
         'is_staff': is_staff,
     })
 
+@login_required()
 def detail(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -32,7 +35,8 @@ def detail(request, primary_key):
         'book_reviews': book_reviews,
     })
 
-
+@login_required()
+@allow_certain_groups(allowed_groups=['staff'])
 def add(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -49,6 +53,8 @@ def add(request):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(allowed_groups=['staff'])
 def edit(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -67,6 +73,8 @@ def edit(request, primary_key):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(allowed_groups=['staff'])
 def add_author(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -85,6 +93,8 @@ def add_author(request):
         'is_staff': is_staff,
     })
 
+@login_required()
+@allow_certain_groups(allowed_groups=['staff'])
 def add_author_in_author_list(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
