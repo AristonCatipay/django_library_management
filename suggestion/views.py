@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Suggestion
 from .form import SuggestionForm
 
+@login_required
 def index(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -12,6 +14,7 @@ def index(request):
         'is_staff': is_staff,
     })
 
+@login_required
 def add(request):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
@@ -30,6 +33,7 @@ def add(request):
         'is_staff': is_staff,
     })
 
+@login_required
 def edit(request, primary_key):
     is_staff = True if request.user.groups.filter(name='staff') else False
 
