@@ -60,7 +60,7 @@ pipenv install psycopg2
 Create a database named 'django_library_management' 
 using your RDMS of choice.
 
-![Create_a_database](/readme_images/postgre_create_database.png)
+![Create_a_database](/readme_images/postgre_create_database.PNG)
 
 Edit your database configuration in the settings.py.
 ![Database_Configuration](/readme_images/postgre_change_database_settings.png)
