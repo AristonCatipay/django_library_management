@@ -32,6 +32,16 @@ Install Pillow
 pipenv install pillow
 ```
 
+Install Tailwind
+```bash
+pipenv install django-tailwind
+```
+
+Install Django Tailwind Reload
+```bash
+pipenv install django-tailwind[reload]
+```
+
 ### If you want to use MySQL for your database. (Optional)
 Install MySQL Client
 ```bash
