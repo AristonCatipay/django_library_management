@@ -9,8 +9,6 @@ from .forms import ThesisForm, AuthorForm, AuthorListForm
 
 @login_required
 def index(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     theses = Thesis.objects.all()
     courses = Course.objects.all()
 
@@ -23,15 +21,13 @@ def index(request):
         theses = Thesis.objects.filter(Q(title__icontains=query))
     return render(request, 'thesis/index.html', {
         'title': 'Thesis',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'theses': theses,
         'courses': courses,
     })
 
 @login_required
 def detail(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     thesis = get_object_or_404(Thesis, pk=primary_key)
     authors = Author_List.objects.filter(thesis_id=primary_key)
     
@@ -39,7 +35,7 @@ def detail(request, primary_key):
         'title': 'Thesis Detail',
         'thesis': thesis,
         'authors': authors,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
@@ -52,8 +48,6 @@ def view_file(request, file_location):
 @login_required
 @allow_certain_groups(['staff'])
 def add(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = ThesisForm(request.POST, request.FILES)
         if form.is_valid():
@@ -64,14 +58,12 @@ def add(request):
     return render(request, 'thesis/form.html', {
         'title': 'Thesis',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
 @allow_certain_groups(['staff'])
 def edit(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     thesis = get_object_or_404(Thesis, pk=primary_key)
     if request.method == 'POST':
         form = ThesisForm(request.POST, request.FILES, instance=thesis)
@@ -83,14 +75,12 @@ def edit(request, primary_key):
     return render(request, 'thesis/form.html', {
         'title': 'Edit Thesis',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
 @allow_certain_groups(['staff'])
 def add_author(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = AuthorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -104,14 +94,12 @@ def add_author(request):
     return render(request, 'thesis/form.html', {
         'title': 'Add Author',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
 @allow_certain_groups(['staff'])
 def add_author_in_author_list(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = AuthorListForm(request.POST)
         if form.is_valid():
@@ -124,5 +112,5 @@ def add_author_in_author_list(request, primary_key):
     return render(request, 'thesis/form.html', {
         'title': 'Add Author in Author List',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
