@@ -8,7 +8,6 @@ from review.models import Reviewed_Item
 
 @login_required()
 def index(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
     books = Book.objects.all()
 
     query = request.GET.get('query', '')
@@ -17,19 +16,17 @@ def index(request):
     return render(request, 'book/index.html', {
         'title': 'Book',
         'books': books,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 def detail(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     book = get_object_or_404(Book, pk=primary_key)
     authors = Author_List.objects.filter(book_id=primary_key)
     book_reviews = Reviewed_Item.objects.filter(book_id=primary_key)
     return render(request, 'book/detail.html', {
         'title': 'Book Detail',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'book': book,
         'authors': authors,
         'book_reviews': book_reviews,
@@ -38,8 +35,6 @@ def detail(request, primary_key):
 @login_required()
 @allow_certain_groups(allowed_groups=['staff'])
 def add(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
@@ -50,14 +45,12 @@ def add(request):
     return render(request, 'book/form.html', {
         'title': 'Add Book',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 @allow_certain_groups(allowed_groups=['staff'])
 def edit(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     book = get_object_or_404(Book, pk=primary_key)
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
@@ -70,14 +63,12 @@ def edit(request, primary_key):
     return render(request, 'book/form.html', {
         'title': 'Edit Book',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 @allow_certain_groups(allowed_groups=['staff'])
 def add_author(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = AuthorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -90,14 +81,12 @@ def add_author(request):
     return render(request, 'book/form.html', {
         'title': 'Add Author',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 @allow_certain_groups(allowed_groups=['staff'])
 def add_author_in_author_list(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = AuthorListForm(request.POST)
         if form.is_valid():
@@ -111,5 +100,5 @@ def add_author_in_author_list(request, primary_key):
     return render(request, 'book/form.html', {
         'title': 'Add Author in Author Lists',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
