@@ -6,20 +6,16 @@ from .forms import CourseForm
 
 @login_required
 def index(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
     courses = Course.objects.all()
-
     return render(request, 'course/index.html', {
         'title': 'Course',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'courses': courses,
     })
 
 @login_required
 @allow_certain_groups(['staff'])
 def add(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
@@ -29,15 +25,13 @@ def add(request):
         form = CourseForm()
     return render(request, 'course/form.html', {
         'title': 'Add Course',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'form': form,
     })
 
 @login_required
 @allow_certain_groups(['staff'])
 def edit(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     course = get_object_or_404(Course, pk=primary_key)
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
@@ -48,7 +42,7 @@ def edit(request, primary_key):
         form = CourseForm(instance=course)
     return render(request, 'course/form.html', {
         'title': 'Edit Course',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'form': form,
     })
 
