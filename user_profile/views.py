@@ -13,52 +13,35 @@ def index(request):
 
 @login_required
 def edit(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        email = request.POST['email']
-        student_number = request.POST['student_number'] 
-        student_contact_no = request.POST['student_contact_no']
+        user = request.user
+        profile = user.profile
 
-        if request.FILES.get('image') == None:
-            # If the user didn't upload their own image
-            # Use the default profile image.
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        user.username = request.POST.get('username', '')
+        user.email = request.POST.get('email', '')
 
-            image = request.user.profile.image
+        # Validating and handling student_number and student_contact_no inputs
+        student_number = request.POST.get('student_number', '')
+        student_contact_no = request.POST.get('student_contact_no', '')
 
-            # Update profile model
-            request.user.profile.image = image
-            request.user.profile.student_number = student_number
-            request.user.profile.student_contact_no = student_contact_no
-            request.user.profile.save()
+        if student_number:
+            profile.student_number = student_number
 
-            # Updated the user model 
-            request.user.first_name = first_name
-            request.user.last_name = last_name
-            request.user.username = username
-            request.user.email = email
-            request.user.save()
+        if student_contact_no:
+            profile.student_contact_no = student_contact_no
 
-        if request.FILES.get('image') != None:
-            image = request.FILES.get('image')
+        # Handling image upload
+        if request.FILES.get('image'):
+            profile.image = request.FILES['image']
 
-            # Update profile model
-            request.user.profile.image = image
-            request.user.profile.student_number = student_number
-            request.user.profile.student_contact_no = student_contact_no
-            request.user.profile.save()
-
-            # Updated the user model 
-            request.user.first_name = first_name
-            request.user.last_name = last_name
-            request.user.username = username
-            request.user.email = email
-            request.user.save()
+        profile.save()
+        user.save()
 
         return redirect('profile:edit')
+
+    is_staff = request.user.groups.filter(name='staff').exists()
 
     return render(request, 'user_profile/edit.html', {
         'title': 'Edit Profile',
