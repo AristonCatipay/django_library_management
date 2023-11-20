@@ -6,8 +6,6 @@ from book.models import Book
 
 @login_required
 def add(request, book_id):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = BookReviewForm(request.POST)
         if form.is_valid():
@@ -26,6 +24,6 @@ def add(request, book_id):
         form = BookReviewForm()
     return render(request, 'review/form.html', {
         'title': 'Add Review',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'form': form,
     })
