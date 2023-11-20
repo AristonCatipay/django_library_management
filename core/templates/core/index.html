@@ -6,7 +6,7 @@
 <p class="text-lg font-semibold text-gray-500 truncate dark:text-gray-300">
    Statistics
 </p>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 flex items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 items-center justify-center rounded bg-gray-50 dark:bg-gray-800">
    <div class="grid grid-cols-2 gap-4 items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
       <div class="justify-self-end w-16 h-16 rounded-full text-blue-100 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 flex items-center justify-center mb-1">
          <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
@@ -71,6 +71,76 @@
             </p>
             <p class="text-md text-gray-500 truncate dark:text-gray-400">
                 Thesis
+            </p>
+        </div>
+      </div>
+   </div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 items-center justify-center rounded bg-gray-50 dark:bg-gray-800">
+   <div class="grid grid-cols-2 gap-4 items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+      <div class="justify-self-end w-16 h-16 rounded-full text-blue-100 bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 flex items-center justify-center mb-1">
+         <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 1h12M3 1v16M3 1H2m13 0v16m0-16h1m-1 16H3m12 0h2M3 17H1M6 4h1v1H6V4Zm5 0h1v1h-1V4ZM6 8h1v1H6V8Zm5 0h1v1h-1V8Zm-3 4h2a1 1 0 0 1 1 1v4H7v-4a1 1 0 0 1 1-1Z"/>
+         </svg>
+      </div>
+      <div class="justify-self-start">
+         <div class="flex-1 min-w-0">
+            <p class="text-2xl font-semibold text-gray-900 truncate dark:text-white">
+                {{ courses_total }}
+            </p>
+            <p class="text-md text-gray-500 truncate dark:text-gray-400">
+               Courses
+            </p>
+        </div>
+      </div>
+   </div>
+   <div class="grid grid-cols-2 gap-4 items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+      <div class="justify-self-end w-16 h-16 rounded-full text-pink-100 bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 flex items-center justify-center mb-1">
+         <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 5h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-2v3l-4-3H8m4-13H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h2v3l4-3h4a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+         </svg>
+      </div>
+      <div class="justify-self-start">
+         <div class="flex-1 min-w-0">
+            <p class="text-2xl font-semibold text-gray-900 truncate dark:text-white">
+                {{ suggestions_total }}
+            </p>
+            <p class="text-md text-gray-500 truncate dark:text-gray-400">
+                Suggestions
+            </p>
+        </div>
+      </div>
+   </div>
+   <div class="grid grid-cols-2 gap-4 items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+      <div class="justify-self-end w-16 h-16 rounded-full text-cyan-100 bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 flex items-center justify-center mb-1">
+         <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z"/>
+         </svg>
+      </div>
+      <div class="justify-self-start">
+         <div class="flex-1 min-w-0">
+            <p class="text-2xl font-semibold text-gray-900 truncate dark:text-white">
+                {{ book_authors_total }}
+            </p>
+            <p class="text-md text-gray-500 truncate dark:text-gray-400">
+                Book Authors
+            </p>
+        </div>
+      </div>
+   </div>
+   <div class="grid grid-cols-2 gap-4 items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+      <div class="justify-self-end w-16 h-16 rounded-full text-orange-100 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 flex items-center justify-center mb-1">
+         <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.109 17H1v-2a4 4 0 0 1 4-4h.87M10 4.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm7.95 2.55a2 2 0 0 1 0 2.829l-6.364 6.364-3.536.707.707-3.536 6.364-6.364a2 2 0 0 1 2.829 0Z"/>
+         </svg>
+      </div>
+      <div class="justify-self-start">
+         <div class="flex-1 min-w-0">
+            <p class="text-2xl font-semibold text-gray-900 truncate dark:text-white">
+                {{ thesis_authors_total }}
+            </p>
+            <p class="text-md text-gray-500 truncate dark:text-gray-400">
+                Thesis Authors
             </p>
         </div>
       </div>

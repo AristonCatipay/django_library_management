@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from user_profile.models import Profile
 from course.models import Course
+from suggestion.models import Suggestion
 from .decorators import unauthenticated_user, allow_certain_groups
-from book.models import Book
-from thesis.models import Thesis
-# Create your views here.
+from book.models import Book, Author as Book_Author
+from thesis.models import Thesis , Author as Thesis_Author
 
 def home(request):
     auth.logout(request)
@@ -27,6 +27,10 @@ def index(request):
     thesis_total = Thesis.objects.count()
     students_total = User.objects.filter(groups__name='student').count()
     teachers_total = User.objects.filter(groups__name='teacher').count()
+    courses_total = Course.objects.count()
+    suggestions_total = Suggestion.objects.count()
+    book_authors_total = Book_Author.objects.count()
+    thesis_authors_total = Thesis_Author.objects.count()
 
     return render(request, 'core/index.html', {
         'title': 'Welcome',
@@ -36,7 +40,10 @@ def index(request):
         'thesis_total': thesis_total,
         'students_total': students_total,
         'teachers_total': teachers_total,
-
+        'courses_total': courses_total,
+        'suggestions_total': suggestions_total,
+        'book_authors_total': book_authors_total,
+        'thesis_authors_total': thesis_authors_total,
     })
 
 @unauthenticated_user
