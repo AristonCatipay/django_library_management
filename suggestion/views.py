@@ -5,19 +5,15 @@ from .form import SuggestionForm
 
 @login_required
 def index(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     suggestions = Suggestion.objects.filter(created_by=request.user)
     return render(request, 'suggestion/index.html', {
         'title': 'Suggestion',
         'suggestions': suggestions,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
 def add(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         form = SuggestionForm(request.POST)
         if form.is_valid():
@@ -30,13 +26,11 @@ def add(request):
     return render(request, 'suggestion/form.html', {
         'title': 'Add Suggestion',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
 def edit(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     suggestion = get_object_or_404(Suggestion, id=primary_key)
     if request.method == 'POST':
         form = SuggestionForm(request.POST, instance=suggestion)
@@ -49,5 +43,5 @@ def edit(request, primary_key):
     return render(request, 'suggestion/form.html', {
         'title': 'Edit Suggestion',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
