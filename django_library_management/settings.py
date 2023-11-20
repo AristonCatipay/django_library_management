@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'middleware.is_staff.IsStaffMiddleware',
 ]
 
 ROOT_URLCONF = 'django_library_management.urls'
