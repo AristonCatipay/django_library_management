@@ -4,11 +4,9 @@ from django.contrib import messages
 
 @login_required
 def index(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     return render(request, 'user_profile/index.html', {
         'title': 'Profile',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
@@ -41,17 +39,13 @@ def edit(request):
 
         return redirect('profile:edit')
 
-    is_staff = request.user.groups.filter(name='staff').exists()
-
     return render(request, 'user_profile/edit.html', {
         'title': 'Edit Profile',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required
 def change_password(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     if request.method == 'POST':
         new_password = request.POST['new_password'] 
         confirm_new_password = request.POST['confirm_new_password'] 
@@ -67,5 +61,5 @@ def change_password(request):
             
     return render(request, 'user_profile/change_password.html', {
         'title': 'Change Password',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
