@@ -18,3 +18,8 @@ class TestUrls(SimpleTestCase):
     def test_signup_url(self):
         url = reverse('core:signup')
         self.assertEquals(resolve(url).func, signup)
+    
+    def test_signout_url(self):
+        url = reverse('core:logout')
+        self.assertEquals(resolve(url).func, logout)
+    
