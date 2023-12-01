@@ -11,4 +11,6 @@ class ProfileUrlTestCase(SimpleTestCase):
         url = reverse('profile:edit')
         self.assertEquals(resolve(url).func, edit)
         
-    
+    def test_change_password_url(self):
+        url = reverse('profile:change_password')
+        self.assertEquals(resolve(url).func, change_password)
