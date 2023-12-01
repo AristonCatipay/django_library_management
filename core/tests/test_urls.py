@@ -23,3 +23,6 @@ class TestUrls(SimpleTestCase):
         url = reverse('core:logout')
         self.assertEquals(resolve(url).func, logout)
     
+    def test_users_url(self):
+        url = reverse('core:users')
+        self.assertEquals(resolve(url).func, users)
