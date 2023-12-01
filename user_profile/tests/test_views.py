@@ -28,6 +28,13 @@ class ProfileViewTestCase(TestCase):
             course = self.course,
         )
 
+    def test_index_view(self):
+        self.client.force_login(self.user)
+        url = reverse('profile:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response ,'user_profile/index.html')
+
     def tearDown(self):
         # Cleanup after each test
         self.profile.delete()
