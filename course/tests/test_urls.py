@@ -1,8 +1,12 @@
-from django.test import SimpleTestCase
+from django.test import TestCase
 from django.urls import reverse, resolve
 from course.views import index, add, edit, delete
+from course.models import Course
 
-class CourseTestUrls(SimpleTestCase):
+class CourseTestUrls(TestCase):
+    def setUp(self):
+        self.course = Course.objects.create(name='Not specified', abbreviation='NS')
+
     def test_index_url(self):
         url = reverse('course:index')
         self.assertEquals(resolve(url).func, index)
@@ -10,3 +14,10 @@ class CourseTestUrls(SimpleTestCase):
     def test_add_url(self):
         url = reverse('course:add')
         self.assertEquals(resolve(url).func, add)
+
+    def test_edit_url(self):
+        url = reverse('course:edit', args=[self.course.pk])
+        self.assertEquals(resolve(url).func, edit)
+
+    def tearDown(self):
+        self.course
