@@ -84,6 +84,13 @@ class CoreViewTestCase(TestCase):
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)
         self.assertNotIn('_auth_user_id', self.client.session)
+
+    def test_users_view(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('core:users')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response ,'core/users.html')
     
     def tearDown(self):
         self.user.delete()
