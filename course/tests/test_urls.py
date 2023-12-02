@@ -18,6 +18,10 @@ class CourseTestUrls(TestCase):
     def test_edit_url(self):
         url = reverse('course:edit', args=[self.course.pk])
         self.assertEquals(resolve(url).func, edit)
+    
+    def test_delete_url(self):
+        url = reverse('course:delete', args=[self.course.pk])
+        self.assertEquals(resolve(url).func, delete)
 
     def tearDown(self):
         self.course
