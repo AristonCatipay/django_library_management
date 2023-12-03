@@ -18,6 +18,13 @@ class SuggestionTestViews(TestCase):
             created_by = self.user,
         )
 
+    def test_index_views(self):
+        self.client.force_login(self.user)
+        url = reverse('suggestion:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'suggestion/index.html')
+
     def tearDown(self):
         self.suggestion.delete()
         self.user.delete()
