@@ -36,6 +36,10 @@ class BookTestUrls(TestCase):
         url = reverse('book:edit', args=[self.book.pk])
         self.assertEquals(resolve(url).func, edit)
 
+    def test_add_author_url(self):
+        url = reverse('book:add_author')
+        self.assertEquals(resolve(url).func, add_author)
+
     def test_add_author_in_author_list_url(self):
         url = reverse('book:add_author_in_author_list', args=[self.author.pk])
         self.assertEquals(resolve(url).func, add_author_in_author_list)
