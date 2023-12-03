@@ -17,6 +17,13 @@ class CourseTestViews(TestCase):
         self.course = Course.objects.create(name='Not specified', abbreviation='NS')
         self.user_staff_profile = Profile.objects.create(user=self.user_staff, course=self.course)
         self.user_staff.groups.add(self.group_staff)
+
+    def test_index_view(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('course:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'course/index.html')
         
     def tearDown(self):
         self.course.delete()
