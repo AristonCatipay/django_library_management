@@ -14,6 +14,12 @@ class BookTestUrls(TestCase):
             rack_level_number = 3,
         )
 
+        self.author = Author.objects.create(
+            name = 'Author test',
+            first_name = 'Firstname test',
+            last_name = 'Lastname test',
+        )
+
     def test_index_url(self):
         url = reverse('book:index')
         self.assertEquals(resolve(url).func, index)
@@ -30,5 +36,10 @@ class BookTestUrls(TestCase):
         url = reverse('book:edit', args=[self.book.pk])
         self.assertEquals(resolve(url).func, edit)
 
+    def test_add_author_in_author_list_url(self):
+        url = reverse('book:add_author_in_author_list', args=[self.author.pk])
+        self.assertEquals(resolve(url).func, add_author_in_author_list)
+
     def tearDown(self):
         self.book.delete()
+        self.author.delete()
