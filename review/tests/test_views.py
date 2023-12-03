@@ -6,7 +6,7 @@ from course.models import Course
 from book.models import Book
 from review.views import add
 
-class ReviewTestUrls(TestCase):
+class ReviewTestView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             first_name = 'firstname test',
@@ -39,7 +39,7 @@ class ReviewTestUrls(TestCase):
             rack_level_number = 3,
         )
 
-    def test_add_url(self):
+    def test_add_view(self):
         self.client.force_login(self.user)
         url = reverse('review:add', kwargs={'book_id': self.book.id})
         response = self.client.get(url)
@@ -60,4 +60,7 @@ class ReviewTestUrls(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def tearDown(self):
+        self.profile.delete()
+        self.course.delete()
+        self.user.delete()
         self.book.delete()
