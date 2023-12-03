@@ -24,4 +24,4 @@ class CourseTestUrls(TestCase):
         self.assertEquals(resolve(url).func, delete)
 
     def tearDown(self):
-        self.course
+        self.course.delete()
