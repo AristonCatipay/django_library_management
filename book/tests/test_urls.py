@@ -18,5 +18,9 @@ class BookTestUrls(TestCase):
         url = reverse('book:index')
         self.assertEquals(resolve(url).func, index)
 
+    def test_add_url(self):
+        url = reverse('book:add')
+        self.assertEquals(resolve(url).func, add)
+
     def tearDown(self):
         self.book.delete()
