@@ -26,5 +26,9 @@ class BookTestUrls(TestCase):
         url = reverse('book:detail', args=[self.book.pk])
         self.assertEquals(resolve(url).func, detail)
 
+    def test_edit_url(self):
+        url = reverse('book:edit', args=[self.book.pk])
+        self.assertEquals(resolve(url).func, edit)
+
     def tearDown(self):
         self.book.delete()
