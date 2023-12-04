@@ -61,6 +61,10 @@ class BookTestUrls(TestCase):
         url = reverse('borrow_book:borrow_request')
         self.assertEquals(resolve(url).func, borrow_request)
 
+    def test_borrow_request_approve_url(self):
+        url = reverse('borrow_book:borrow_request_approve', args=[self.borrow_book.pk])
+        self.assertEquals(resolve(url).func, borrow_request_approve)
+
     def tearDown(self):
         self.borrow_book.delete()
         self.book.delete()
