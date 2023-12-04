@@ -7,7 +7,7 @@ from book.models import Book, Author
 from course.models import Course
 from user_profile.models import Profile
 
-class BookTestUrls(TestCase):
+class BorrowBookTestUrls(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             first_name = 'firstname test',
