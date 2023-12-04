@@ -47,6 +47,13 @@ class BookTestViews(TestCase):
             author = self.author,
         )
 
+    def test_index_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('book:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'book/index.html')
+
     def tearDown(self):
         self.author_list.delete()
         related_author_lists = Author_List.objects.filter(book=self.book)
