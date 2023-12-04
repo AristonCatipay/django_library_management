@@ -86,6 +86,31 @@ class BookTestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'book/detail.html')
 
+    def test_edit_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('book:edit', kwargs={'primary_key' : self.book.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'book/form.html')
+
+        data = {
+            'title': 'This is an edited book title.',
+            'isbn_number': '2019111111111',
+            'date_published': '2013-03-03', 
+            'inventory': 4,
+            'rack_number': 4,
+            'rack_level_number': 4,
+        }
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Edit Book):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+        self.assertEqual(response.status_code, 302)
+
     def tearDown(self):
         self.author_list.delete()
         related_author_lists = Author_List.objects.filter(book=self.book)
