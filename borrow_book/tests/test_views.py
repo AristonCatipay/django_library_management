@@ -63,6 +63,13 @@ class BorrowBookTestView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/borrow_request.html')
 
+    def test_book_pick_up_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('borrow_book:book_pick_up')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'borrow_book/book_pick_up.html')
+
     def tearDown(self):
         self.borrow_book.delete()
         self.book.delete()
