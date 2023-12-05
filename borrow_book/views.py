@@ -9,13 +9,11 @@ from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm
 
 @login_required()
 def index(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     borrow_books = Borrow_Book.objects.filter(created_by=request.user)
     return render(request, 'borrow_book/index.html', {
         'title': 'Borrowed Books',
         'borrow_books': borrow_books,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
@@ -32,20 +30,16 @@ def add(request, primary_key):
 
 @login_required()
 def borrow_request(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
     return render(request, 'borrow_book/borrow_request.html', {
         'title': 'Borrow Request',
         'borrow_books': borrow_books,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 @allow_certain_groups(['staff'])
 def borrow_request_approve(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     transaction = get_object_or_404(Borrow_Book, pk=primary_key)
 
     if request.method == 'POST':
@@ -60,27 +54,23 @@ def borrow_request_approve(request, primary_key):
         form = BorrowBookRequestApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
         'title': 'Borrow Book Request Approve',
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'form': form,
     })
 
 @login_required()
 @allow_certain_groups(['staff'])
 def book_pick_up(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
     return render(request, 'borrow_book/book_pick_up.html', {
         'title': 'Borrow Request',
         'borrow_books': borrow_books,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 @allow_certain_groups(['staff'])
 def book_pick_up_approve(request, primary_key):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     transaction = get_object_or_404(Borrow_Book, pk=primary_key)
 
     if request.method == 'POST':
@@ -96,19 +86,17 @@ def book_pick_up_approve(request, primary_key):
     return render(request, 'borrow_book/form.html', {
         'title': 'Book Pick Up Approve',
         'form': form,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
 @allow_certain_groups(['staff'])
 def book_return(request):
-    is_staff = True if request.user.groups.filter(name='staff') else False
-
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Borrowed')
     return render(request, 'borrow_book/return_book.html', {
         'title': 'Borrow Request',
         'borrow_books': borrow_books,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
     })
 
 @login_required()
