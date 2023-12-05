@@ -45,6 +45,13 @@ class ThesisTestViews(TestCase):
             author = self.author,
         )
 
+    def test_index_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('thesis:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'thesis/index.html')
+
     def tearDown(self):
         # Delete related Thesis instances first
         related_theses = Thesis.objects.filter(course=self.course)
