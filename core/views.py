@@ -20,7 +20,6 @@ def home(request):
 def index(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
 
     # Statistics
     books_total = Book.objects.count()
@@ -35,7 +34,7 @@ def index(request):
     return render(request, 'core/index.html', {
         'title': 'Welcome',
         'profile': profile,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'books_total': books_total,
         'thesis_total': thesis_total,
         'students_total': students_total,
@@ -118,13 +117,12 @@ def logout(request):
 def users(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
-    is_staff = True if user.groups.filter(name='staff') else False
 
     users = User.objects.all()
 
     return render(request, 'core/users.html', {
         'title': 'Users',
         'profile': profile,
-        'is_staff': is_staff,
+        'is_staff': request.is_staff,
         'users': users,
     })
