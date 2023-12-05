@@ -41,6 +41,10 @@ class ThesisTestUrls(TestCase):
         url = reverse('thesis:add_author')
         self.assertEquals(resolve(url).func, add_author)
 
+    def test_add_author_in_author_list_url(self):
+        url = reverse('thesis:add_author_in_author_list', args=[self.author.pk])
+        self.assertEquals(resolve(url).func, add_author_in_author_list)
+
     def tearDown(self):
         self.thesis.delete()
         self.author.delete()
