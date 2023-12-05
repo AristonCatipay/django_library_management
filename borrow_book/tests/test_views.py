@@ -111,6 +111,27 @@ class BorrowBookTestView(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/book_pick_up.html')
+    
+    def test_book_pick_up_approve_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('borrow_book:book_pick_up_approve', kwargs={'primary_key':self.borrow_book.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'borrow_book/form.html')
+
+        data = {
+            'return_due_date': '2023-04-02',
+        }
+
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Approve Borrow Pickup):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+        self.assertEqual(response.status_code, 302)
 
     def test_book_return_views(self):
         self.client.force_login(self.user_staff)
