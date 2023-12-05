@@ -25,6 +25,10 @@ class ThesisTestUrls(TestCase):
         url = reverse('thesis:index')
         self.assertEquals(resolve(url).func, index)
 
+    def test_add_url(self):
+        url = reverse('thesis:add')
+        self.assertEquals(resolve(url).func, add)
+
     def tearDown(self):
         self.thesis.delete()
         self.author.delete()
