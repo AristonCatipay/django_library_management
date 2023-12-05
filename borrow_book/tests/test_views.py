@@ -56,6 +56,27 @@ class BorrowBookTestView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/index.html')
 
+    def test_add_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('borrow_book:add', kwargs={'primary_key': self.book.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+        data = {
+            'created_by': self.user.pk,
+            'book': self.book.pk,
+        }
+
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Add Borrow Request):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+        self.assertEqual(response.status_code, 302)
+
     def test_borrow_request_views(self):
         self.client.force_login(self.user_staff)
         url = reverse('borrow_book:borrow_request')
@@ -79,6 +100,8 @@ class BorrowBookTestView(TestCase):
 
     def tearDown(self):
         self.borrow_book.delete()
+        related_borrow_book_transaction = Borrow_Book.objects.filter(book=self.book)
+        related_borrow_book_transaction.delete()
         self.book.delete()
         self.author.delete()
         self.course.delete()
