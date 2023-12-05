@@ -52,6 +52,28 @@ class ThesisTestViews(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'thesis/index.html')
 
+    def test_add_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('thesis:add')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'thesis/form.html')
+
+        data = {
+            'title': 'This is a thesis title.',
+            'date_published': '2012-03-03', 
+            'course': self.course.pk,
+        }
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Add Thesis):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+        self.assertEqual(response.status_code, 302)
+
     def tearDown(self):
         # Delete related Thesis instances first
         related_theses = Thesis.objects.filter(course=self.course)
