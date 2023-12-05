@@ -7,7 +7,7 @@ from book.models import Book, Author
 from course.models import Course
 from user_profile.models import Profile
 
-class BookTestView(TestCase):
+class BorrowBookTestView(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             first_name = 'firstname test',
@@ -48,6 +48,13 @@ class BookTestView(TestCase):
             created_by = self.user,
             book = self.book,
         )
+
+    def test_index_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('borrow_book:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'borrow_book/index.html')
 
     def tearDown(self):
         self.borrow_book.delete()
