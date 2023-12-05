@@ -6,6 +6,7 @@ from borrow_book.models import Borrow_Book
 from book.models import Book, Author
 from course.models import Course
 from user_profile.models import Profile
+from datetime import date
 
 class BorrowBookTestView(TestCase):
     def setUp(self):
@@ -47,6 +48,7 @@ class BorrowBookTestView(TestCase):
         self.borrow_book = Borrow_Book.objects.create(
             created_by = self.user,
             book = self.book,
+            return_due_date=date(2023, 4, 2)
         )
 
     def test_index_views(self):
@@ -139,6 +141,12 @@ class BorrowBookTestView(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/return_book.html')
+
+    def test_book_return_approved_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('borrow_book:book_return_approved', kwargs={'primary_key':self.borrow_book.pk})
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 302)
 
     def tearDown(self):
         self.borrow_book.delete()
