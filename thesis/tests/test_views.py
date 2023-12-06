@@ -83,17 +83,24 @@ class ThesisTestViews(TestCase):
 
     def test_edit_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('thesis:edit', kwargs={'primary_key': self.thesis.pk})
+        url = reverse('thesis:edit', kwargs={'primary_key' : self.thesis.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'thesis/edit.html')
+        self.assertTemplateUsed(response, 'thesis/form.html')
 
-        updated_data = {
-            'title': 'Updated thesis title',
-            'date_published': '2023-03-03',
+        data = {
+            'title': 'This is an edited thesis title.',
+            'date_published': '2013-03-03', 
             'course': self.course.pk,
         }
-        response = self.client.post(url, updated_data)
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Edit Thesis):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
         self.assertEqual(response.status_code, 302)
 
     def tearDown(self):
