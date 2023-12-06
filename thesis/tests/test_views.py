@@ -73,6 +73,13 @@ class ThesisTestViews(TestCase):
             if form.errors:
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
+    
+    def test_detail_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('thesis:detail', kwargs={'primary_key' : self.thesis.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'thesis/detail.html')
 
     def tearDown(self):
         # Delete related Thesis instances first
