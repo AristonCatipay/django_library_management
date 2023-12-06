@@ -8,16 +8,16 @@ from user_profile.models import Profile
 class ThesisTestViews(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            first_name = 'firstname test',
-            last_name = 'lastname test',
+            first_name='firstname test',
+            last_name='lastname test',
             username='testuser',
             email='emailtest',
             password='12345'
         )
 
         self.user_staff = User.objects.create_user(
-            first_name = 'firstname staff',
-            last_name = 'lastname staff',
+            first_name='firstname staff',
+            last_name='lastname staff',
             username='testuser staff',
             email='emailtest staff',
             password='12345'
@@ -28,21 +28,21 @@ class ThesisTestViews(TestCase):
         self.user_staff.groups.add(self.group_staff)
         
         self.thesis = Thesis.objects.create(
-            title = 'Thesis title test',
-            date_published = '2023-3-3',
-            course = self.course,
+            title='Thesis title test',
+            date_published='2023-3-3',
+            course=self.course,
         )
 
         self.author = Author.objects.create(
-            name = 'Author test',
-            first_name = 'Firstname test',
-            last_name = 'Lastname test',
-            course = self.course,
+            name='Author test',
+            first_name='Firstname test',
+            last_name='Lastname test',
+            course=self.course,
         )
         
         self.author_list = Author_List.objects.create(
-            thesis = self.thesis,
-            author = self.author,
+            thesis=self.thesis,
+            author=self.author,
         )
 
     def test_index_views(self):
@@ -61,7 +61,7 @@ class ThesisTestViews(TestCase):
 
         data = {
             'title': 'This is a thesis title.',
-            'date_published': '2012-03-03', 
+            'date_published': '2012-03-03',
             'course': self.course.pk,
         }
         response = self.client.post(url, data)
@@ -73,10 +73,10 @@ class ThesisTestViews(TestCase):
             if form.errors:
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
-    
+
     def test_detail_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('thesis:detail', kwargs={'primary_key' : self.thesis.pk})
+        url = reverse('thesis:detail', kwargs={'primary_key': self.thesis.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'thesis/detail.html')
@@ -122,4 +122,3 @@ class ThesisTestViews(TestCase):
         self.user_staff_profile.delete()
         self.user_staff.delete()
         self.user.delete()
-
