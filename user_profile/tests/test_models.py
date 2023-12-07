@@ -36,3 +36,7 @@ class ProfileModelTest(TestCase):
     def test_user_relationship(self):
         expected_user = self.profile.user
         self.assertEqual(expected_user.username, 'testuser')
+
+    def test_image_content(self):
+        expected_image = f'{self.profile.image}'
+        self.assertEqual(expected_image, 'media/default_profile_image.jpg')
