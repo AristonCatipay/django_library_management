@@ -52,3 +52,7 @@ class ProfileModelTest(TestCase):
     def test_student_contact_no_content(self):
         expected_student_contact_no = f'{self.profile.student_contact_no}'
         self.assertEqual(expected_student_contact_no, '09123456789')
+    
+    def test_course_relationship(self):
+        expected_course = self.profile.course
+        self.assertEqual(expected_course.name, 'Test Course')
