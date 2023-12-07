@@ -44,3 +44,7 @@ class ProfileModelTest(TestCase):
     def test_gender_content(self):
         expected_gender = f'{self.profile.gender}'
         self.assertEqual(expected_gender, 'O')
+
+    def test_student_number_content(self):
+        expected_student_number = f'{self.profile.student_number}'
+        self.assertEqual(expected_student_number, '2019112233')
