@@ -126,6 +126,27 @@ class ThesisTestViews(TestCase):
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
 
+    def test_add_author_in_author_list_views(self):
+        self.client.force_login(self.user_staff)
+        url = reverse('thesis:add_author_in_author_list', kwargs={'primary_key' : self.author.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'thesis/form.html')
+
+        data = {
+            'thesis' : self.thesis.pk,
+            'author' : self.author.pk,
+        }
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Add Author in Author List):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+        self.assertEqual(response.status_code, 302)
+        
     def tearDown(self):
         # Delete related Thesis instances first
         related_theses = Thesis.objects.filter(course=self.course)
