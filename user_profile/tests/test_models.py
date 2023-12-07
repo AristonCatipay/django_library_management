@@ -40,3 +40,7 @@ class ProfileModelTest(TestCase):
     def test_image_content(self):
         expected_image = f'{self.profile.image}'
         self.assertEqual(expected_image, 'media/default_profile_image.jpg')
+
+    def test_gender_content(self):
+        expected_gender = f'{self.profile.gender}'
+        self.assertEqual(expected_gender, 'O')
