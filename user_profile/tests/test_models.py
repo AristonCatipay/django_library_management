@@ -32,3 +32,7 @@ class ProfileModelTest(TestCase):
         self.profile.delete()
         self.user.delete()
         self.course.delete()
+
+    def test_user_relationship(self):
+        expected_user = self.profile.user
+        self.assertEqual(expected_user.username, 'testuser')
