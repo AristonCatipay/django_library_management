@@ -47,3 +47,7 @@ class ReviewTestModel(TestCase):
     def test_review_and_user_relationship(self):
         user = self.review.user
         self.assertEqual(user.username, 'testuser')
+
+    def test_review_and_profile_relationship(self):
+        profile = self.review.profile
+        self.assertEqual(profile.student_number, '2019112233')
