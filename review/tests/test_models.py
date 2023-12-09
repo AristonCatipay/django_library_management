@@ -43,3 +43,7 @@ class ReviewTestModel(TestCase):
     def test_review_content(self):
         expected_review = f'{self.review.review}'
         self.assertEqual(expected_review, 'This is a test review.')
+
+    def test_review_and_user_relationship(self):
+        user = self.review.user
+        self.assertEqual(user.username, 'testuser')
