@@ -109,3 +109,7 @@ class ReviewItemTestModel(TestCase):
     def test_review_item_and_review_relationship(self):
         review_item = self.review_item.review
         self.assertEqual(review_item.review, 'This is a test review.')
+
+    def test_review_item_and_book_relationship(self):
+        book = self.review_item.book
+        self.assertEqual(book.title, 'Book title test')
