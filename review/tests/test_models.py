@@ -39,3 +39,7 @@ class ReviewTestModel(TestCase):
         self.profile.delete()
         self.course.delete()
         self.user.delete()
+
+    def test_review_content(self):
+        expected_review = f'{self.review.review}'
+        self.assertEqual(expected_review, 'This is a test review.')
