@@ -105,3 +105,7 @@ class ReviewItemTestModel(TestCase):
         self.profile.delete()
         self.course.delete()
         self.user.delete()
+
+    def test_review_item_and_review_relationship(self):
+        review_item = self.review_item.review
+        self.assertEqual(review_item.review, 'This is a test review.')
