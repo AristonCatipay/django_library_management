@@ -11,3 +11,7 @@ class CourseModelTest(TestCase):
     def test_course_name_content(self):
         expected_course_name = f'{self.course.name}'
         self.assertEqual(expected_course_name, 'Test Course')
+
+    def test_course_abbreviation_content(self):
+        expected_course_abbreviation = f'{self.course.abbreviation}'
+        self.assertEqual(expected_course_abbreviation, 'TC')
