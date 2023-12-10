@@ -77,3 +77,7 @@ class BorrowBookTestModels(TestCase):
     def test_borrow_book_and_book_relationship(self):
         book = self.borrow_book.book
         self.assertEqual(book.title, 'Book title test')
+
+    def test_borrow_book_and_created_by_student_relationship(self):
+        student = self.borrow_book.created_by
+        self.assertEqual(student.username, 'testuser')
