@@ -48,3 +48,7 @@ class BorrowBookTestModels(TestCase):
         self.book.delete()
         self.staff.delete()
         self.student.delete()
+
+    def test_request_status_content(self):
+        expected_status = f'{self.borrow_book.request_status}'
+        self.assertEqual(expected_status, 'Returned')
