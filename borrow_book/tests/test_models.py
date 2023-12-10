@@ -78,6 +78,10 @@ class BorrowBookTestModels(TestCase):
         book = self.borrow_book.book
         self.assertEqual(book.title, 'Book title test')
 
-    def test_borrow_book_and_created_by_student_relationship(self):
+    def test_borrow_book_and_created_by_user_relationship(self):
         student = self.borrow_book.created_by
         self.assertEqual(student.username, 'testuser')
+
+    def test_borrow_book_and_staff_approve_relationship(self):
+        staff = self.borrow_book.staff_approve
+        self.assertEqual(staff.username, 'testuser staff')
