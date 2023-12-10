@@ -89,3 +89,7 @@ class BorrowBookTestModels(TestCase):
     def test_borrow_book_and_staff_borrow_relationship(self):
         staff = self.borrow_book.staff_borrow
         self.assertEqual(staff.username, 'testuser staff')
+
+    def test_borrow_book_and_staff_return_relationship(self):
+        staff = self.borrow_book.staff_return
+        self.assertEqual(staff.username, 'testuser staff')
