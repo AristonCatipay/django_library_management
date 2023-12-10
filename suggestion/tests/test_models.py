@@ -27,3 +27,7 @@ class SuggestionTestModel(TestCase):
     def test_suggestion_comment_content(self):
         expected_comment = f'{self.suggestion.comment}'
         self.assertEqual(expected_comment, 'I love this book title test')
+    
+    def test_suggestion_and_user_relationship(self):
+        expected_user = self.suggestion.created_by
+        self.assertTrue(expected_user.username, 'testuser')
