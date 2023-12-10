@@ -52,3 +52,8 @@ class BorrowBookTestModels(TestCase):
     def test_request_status_content(self):
         expected_status = f'{self.borrow_book.request_status}'
         self.assertEqual(expected_status, 'Returned')
+    
+    def test_request_created_content(self):
+        current_date = date.today()
+        expected_created_date = self.borrow_book.request_created.date()
+        self.assertEqual(expected_created_date, current_date)
