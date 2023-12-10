@@ -57,3 +57,7 @@ class BorrowBookTestModels(TestCase):
         current_date = date.today()
         expected_created_date = self.borrow_book.request_created.date()
         self.assertEqual(expected_created_date, current_date)
+
+    def test_pick_up_date_content(self):
+        expected_date = f'{self.borrow_book.pick_up_date}'
+        self.assertEqual(expected_date, '2023-12-06')
