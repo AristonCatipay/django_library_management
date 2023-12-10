@@ -65,3 +65,7 @@ class BorrowBookTestModels(TestCase):
     def test_return_due_date_content(self):
         expected_date = f'{self.borrow_book.return_due_date}'
         self.assertEqual(expected_date, '2023-12-09')
+
+    def test_returned_date_content(self):
+        expected_date = f'{self.borrow_book.returned_date}'
+        self.assertEqual(expected_date, '2023-12-09')
