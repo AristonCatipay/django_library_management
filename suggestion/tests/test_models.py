@@ -23,3 +23,7 @@ class SuggestionTestModel(TestCase):
     def test_suggestion_book_title_content(self):
         expected_book_title = f'{self.suggestion.book_title}'
         self.assertEqual(expected_book_title, 'Book Title Test')
+
+    def test_suggestion_comment_content(self):
+        expected_comment = f'{self.suggestion.comment}'
+        self.assertEqual(expected_comment, 'I love this book title test')
