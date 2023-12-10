@@ -20,4 +20,6 @@ class SuggestionTestModel(TestCase):
         self.suggestion.delete()
         self.user.delete()
 
-    
+    def test_suggestion_book_title_content(self):
+        expected_book_title = f'{self.suggestion.book_title}'
+        self.assertEqual(expected_book_title, 'Book Title Test')
