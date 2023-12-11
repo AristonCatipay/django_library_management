@@ -86,3 +86,7 @@ class AuthorListTestModel(TestCase):
     def test_thesis_content(self):
         thesis = self.author_list.thesis
         self.assertEqual(thesis.title, 'Thesis title test')
+
+    def test_author_content(self):
+        author = self.author_list.author
+        self.assertEqual(author.name, 'Author test')
