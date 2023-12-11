@@ -5,9 +5,10 @@ from book.models import Author
 class BookTestForm(TestCase):
     def setUp(self):
         self.author = Author.objects.create(first_name='John', last_name='Doe')
+        
     def tearDown(self):
         self.author.delete()
-        
+
     def test_book_form(self):
         form = BookForm(data={
             'title' : 'Book title test',
