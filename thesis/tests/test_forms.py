@@ -21,3 +21,11 @@ class ThesisTestForm(TestCase):
         form = ThesisForm()
         expected_fields = ['title', 'date_published', 'course', 'image', 'file']
         self.assertEqual(list(form.fields.keys()), expected_fields)
+
+    def test_thesis_form(self):
+        form = ThesisForm(data={
+            'title': 'Thesis title test',
+            'date_published': '2023-03-03',
+            'course' : self.course.pk,  
+        })
+        self.assertTrue(form.is_valid(), form.errors.as_data())
