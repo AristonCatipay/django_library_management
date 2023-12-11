@@ -111,7 +111,6 @@ class ThesisTestViews(TestCase):
         self.assertTemplateUsed(response, 'thesis/form.html')
 
         data = {
-            'name' : 'Add Author Firstname Lastname',
             'first_name' : 'Add Author Firstname',
             'last_name' : 'Add Author Lastname',
             'course' : self.course.pk,
@@ -134,7 +133,6 @@ class ThesisTestViews(TestCase):
         self.assertTemplateUsed(response, 'thesis/form.html')
 
         data = {
-            'thesis' : self.thesis.pk,
             'author' : self.author.pk,
         }
         response = self.client.post(url, data)
