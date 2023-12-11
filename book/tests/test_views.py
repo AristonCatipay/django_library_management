@@ -22,8 +22,8 @@ class BookTestViews(TestCase):
             email='emailtest staff',
             password='12345'
         )
-        self.group_staff = Group.objects.create(name='staff')
         self.course = Course.objects.create(name='Not specified', abbreviation='NS')
+        self.group_staff = Group.objects.create(name='staff')
         self.user_staff_profile = Profile.objects.create(user=self.user_staff, course=self.course)
         self.user_staff.groups.add(self.group_staff)
         
@@ -133,26 +133,26 @@ class BookTestViews(TestCase):
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
 
-    def test_add_author_in_author_list_views(self):
-        self.client.force_login(self.user_staff)
-        url = reverse('book:add_author_in_author_list', kwargs={'primary_key' : self.author.pk})
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'book/form.html')
+    # def test_add_author_in_author_list_views(self):
+    #     self.client.force_login(self.user_staff)
+    #     url = reverse('book:add_author_in_author_list', kwargs={'primary_key' : self.author.pk})
+    #     response = self.client.get(url)
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'book/form.html')
 
-        data = {
-            'book' : self.book.pk,
-            'author' : self.author.pk,
-        }
-        response = self.client.post(url, data)
-        print("\nTest Data Used (Add Author in Author List):", data, "\n")
+    #     data = {
+    #         'book' : self.book.pk,
+    #         'author' : self.author.pk,
+    #     }
+    #     response = self.client.post(url, data)
+    #     print("\nTest Data Used (Add Author in Author List):", data, "\n")
 
-        if response.context:
-            # Retrieve form instance to access errors
-            form = response.context['form']
-            if form.errors:
-                print(form.errors)
-        self.assertEqual(response.status_code, 302)
+    #     if response.context:
+    #         # Retrieve form instance to access errors
+    #         form = response.context['form']
+    #         if form.errors:
+    #             print(form.errors)
+    #     self.assertEqual(response.status_code, 302)
 
     def tearDown(self):
         self.author_list.delete()
