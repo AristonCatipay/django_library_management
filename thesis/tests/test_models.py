@@ -51,3 +51,7 @@ class ThesisTestModel(TestCase):
     def test_date_published_content(self):
         expected_value = f'{self.thesis.date_published}'
         self.assertTrue(expected_value, '2023-03-03')
+
+    def test_course_content(self):
+        course = self.thesis.course
+        self.assertTrue(course.name, 'Not specified')
