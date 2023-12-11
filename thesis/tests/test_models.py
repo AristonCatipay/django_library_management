@@ -55,3 +55,30 @@ class ThesisTestModel(TestCase):
     def test_course_content(self):
         course = self.thesis.course
         self.assertTrue(course.name, 'Not specified')
+
+class AuthorListTestModel(TestCase):
+    def setUp(self):
+        self.course = Course.objects.create(name='Not specified', abbreviation='NS')
+        self.thesis = Thesis.objects.create(
+            title='Thesis title test',
+            date_published='2023-3-3',
+            course=self.course,
+        )
+
+        self.author = Author.objects.create(
+            name='Author test',
+            first_name='Firstname test',
+            last_name='Lastname test',
+            course=self.course,
+        )
+        
+        self.author_list = Author_List.objects.create(
+            thesis=self.thesis,
+            author=self.author,
+        )
+
+    def tearDown(self):
+        self.author_list.delete()
+        self.author.delete()
+        self.thesis.delete()
+        self.course.delete()
