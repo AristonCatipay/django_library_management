@@ -16,3 +16,8 @@ class ThesisTestForm(TestCase):
     def tearDown(self):
         self.author.delete()
         self.course.delete()
+
+    def test_thesis_form_fields(self):
+        form = ThesisForm()
+        expected_fields = ['title', 'date_published', 'course', 'image', 'file']
+        self.assertEqual(list(form.fields.keys()), expected_fields)
