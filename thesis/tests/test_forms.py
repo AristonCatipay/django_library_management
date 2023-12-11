@@ -29,3 +29,8 @@ class ThesisTestForm(TestCase):
             'course' : self.course.pk,  
         })
         self.assertTrue(form.is_valid(), form.errors.as_data())
+
+    def test_author_form_fields(self):
+        form = AuthorForm()
+        expected_fields = ['first_name', 'last_name', 'image', 'course']
+        self.assertEqual(list(form.fields.keys()), expected_fields)
