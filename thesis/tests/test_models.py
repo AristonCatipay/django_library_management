@@ -43,3 +43,7 @@ class ThesisTestModel(TestCase):
     def tearDown(self):
         self.thesis.delete()
         self.course.delete()
+
+    def test_title_content(self):
+        expected_value = f'{self.thesis.title}'
+        self.assertTrue(expected_value, 'Thesis title test')
