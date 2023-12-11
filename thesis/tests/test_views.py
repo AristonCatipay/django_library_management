@@ -111,7 +111,6 @@ class ThesisTestViews(TestCase):
         self.assertTemplateUsed(response, 'thesis/form.html')
 
         data = {
-            'name' : 'Add Author Firstname Lastname',
             'first_name' : 'Add Author Firstname',
             'last_name' : 'Add Author Lastname',
             'course' : self.course.pk,
@@ -128,13 +127,12 @@ class ThesisTestViews(TestCase):
 
     def test_add_author_in_author_list_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('thesis:add_author_in_author_list', kwargs={'primary_key' : self.author.pk})
+        url = reverse('thesis:add_author_in_author_list', kwargs={'primary_key' : self.thesis.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'thesis/form.html')
 
         data = {
-            'thesis' : self.thesis.pk,
             'author' : self.author.pk,
         }
         response = self.client.post(url, data)
