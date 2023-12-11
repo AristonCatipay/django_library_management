@@ -26,3 +26,7 @@ class AuthorTestModel(TestCase):
     def test_name_content(self):
         expected_value = f'{self.author.name}'
         self.assertTrue(expected_value, 'Test fullname')
+
+    def test_course_content(self):
+        course = self.author.course
+        self.assertTrue(course.name, 'Not specified')
