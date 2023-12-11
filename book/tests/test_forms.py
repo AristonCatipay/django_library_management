@@ -12,3 +12,10 @@ class BookTestForm(TestCase):
             'rack_level_number': 3,
         })
         self.assertTrue(form.is_valid(), form.errors.as_data())
+
+    def test_author_form(self):
+        form = AuthorForm(data={
+            'first_name' : 'Firstname test',
+            'last_name' : 'Lastname test',
+        })
+        self.assertTrue(form.is_valid(), form.errors.as_data())
