@@ -127,7 +127,7 @@ class ThesisTestViews(TestCase):
 
     def test_add_author_in_author_list_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('thesis:add_author_in_author_list', kwargs={'primary_key' : self.author.pk})
+        url = reverse('thesis:add_author_in_author_list', kwargs={'primary_key' : self.thesis.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'thesis/form.html')
