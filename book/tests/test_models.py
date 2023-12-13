@@ -37,3 +37,7 @@ class BookTestModel(TestCase):
 
     def tearDown(self):
         self.book.delete()
+
+    def test_title_content(self):
+        expected_value = f'{self.book.title}'
+        self.assertTrue(expected_value, 'Book title test')
