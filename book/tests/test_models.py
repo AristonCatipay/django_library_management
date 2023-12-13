@@ -10,3 +10,7 @@ class AuthorTestModel(TestCase):
         )
     def tearDown(self):
         self.author.delete()
+    
+    def test_first_name_content(self):
+        expected_value = f'{self.author.first_name}'
+        self.assertTrue(expected_value, 'Test firstname')
