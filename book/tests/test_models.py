@@ -45,3 +45,7 @@ class BookTestModel(TestCase):
     def test_isbn_number_content(self):
         expected_value = f'{self.book.isbn_number}'
         self.assertTrue(expected_value, '1234324345')
+
+    def test_date_published_content(self):
+        expected_value = f'{self.book.date_published}'
+        self.assertTrue(expected_value, '2023-03-03')
