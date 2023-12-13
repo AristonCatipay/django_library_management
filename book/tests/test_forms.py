@@ -9,6 +9,11 @@ class BookTestForm(TestCase):
     def tearDown(self):
         self.author.delete()
 
+    def test_book_form_fields(self):
+        form = BookForm()
+        expected_fields = ['title', 'cover_image', 'overview_image', 'table_of_contents_image', 'isbn_number', 'date_published', 'inventory', 'rack_number', 'rack_level_number']
+        self.assertEqual(list(form.fields.keys()), expected_fields)
+
     def test_book_form(self):
         form = BookForm(data={
             'title' : 'Book title test',
