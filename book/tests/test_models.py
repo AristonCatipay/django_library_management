@@ -57,3 +57,7 @@ class BookTestModel(TestCase):
     def test_rack_number_content(self):
         expected_value = f'{self.book.rack_number}'
         self.assertTrue(expected_value, 3)
+    
+    def test_rack_level_number_content(self):
+        expected_value = f'{self.book.rack_level_number}'
+        self.assertTrue(expected_value, 3)
