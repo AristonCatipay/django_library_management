@@ -6,6 +6,7 @@ class AuthorTestModel(TestCase):
         self.author = Author.objects.create(
             first_name = 'Test firstname',
             last_name = 'Test lastname',
+            name = 'Test fullname',
         )
     def tearDown(self):
         self.author.delete()
@@ -17,3 +18,7 @@ class AuthorTestModel(TestCase):
     def test_last_name_content(self):
         expected_value = f'{self.author.last_name}'
         self.assertTrue(expected_value, 'Test lastname')
+
+    def test_name_content(self):
+        expected_value = f'{self.author.name}'
+        self.assertTrue(expected_value, 'Test fullname')
