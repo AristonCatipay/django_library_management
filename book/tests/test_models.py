@@ -61,3 +61,31 @@ class BookTestModel(TestCase):
     def test_rack_level_number_content(self):
         expected_value = f'{self.book.rack_level_number}'
         self.assertTrue(expected_value, 3)
+
+
+class AuthorListTestModel(TestCase):
+    def setUp(self):
+        self.book = Book.objects.create(
+            title = 'Book title test',
+            isbn_number = '1234324345',
+            date_published = '2023-3-3',
+            inventory = 3, 
+            rack_number = 3,
+            rack_level_number = 3,
+        )
+
+        self.author = Author.objects.create(
+            name = 'Author test',
+            first_name = 'Firstname test',
+            last_name = 'Lastname test',
+        )
+        
+        self.author_list = Author_List.objects.create(
+            book = self.book,
+            author = self.author,
+        )
+
+    def tearDown(self):
+        self.author_list.delete()
+        self.author.delete()
+        self.book.delete()
