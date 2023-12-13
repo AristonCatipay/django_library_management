@@ -89,3 +89,7 @@ class AuthorListTestModel(TestCase):
         self.author_list.delete()
         self.author.delete()
         self.book.delete()
+
+    def test_book_content(self):
+        book = self.author_list.book
+        self.assertEqual(book.title, 'Book title test')
