@@ -22,3 +22,18 @@ class AuthorTestModel(TestCase):
     def test_name_content(self):
         expected_value = f'{self.author.name}'
         self.assertTrue(expected_value, 'Test fullname')
+
+
+class BookTestModel(TestCase):
+    def setUp(self):
+        self.book = Book.objects.create(
+            title = 'Book title test',
+            isbn_number = '1234324345',
+            date_published = '2023-03-03',
+            inventory = 3, 
+            rack_number = 3,
+            rack_level_number = 3,
+        )
+
+    def tearDown(self):
+        self.book.delete()
