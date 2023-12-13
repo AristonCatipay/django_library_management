@@ -25,6 +25,11 @@ class BookTestForm(TestCase):
         })
         self.assertTrue(form.is_valid(), form.errors.as_data())
 
+    def test_author_form_fields(self):
+        form = AuthorForm()
+        expected_fields = ['first_name', 'last_name', 'author_image']
+        self.assertEqual(list(form.fields.keys()), expected_fields)
+
     def test_author_form(self):
         form = AuthorForm(data={
             'first_name' : 'Firstname test',
