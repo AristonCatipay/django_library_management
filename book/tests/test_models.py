@@ -93,3 +93,7 @@ class AuthorListTestModel(TestCase):
     def test_book_content(self):
         book = self.author_list.book
         self.assertEqual(book.title, 'Book title test')
+
+    def test_author_content(self):
+        author = self.author_list.author
+        self.assertEqual(author.name, 'Author test')
