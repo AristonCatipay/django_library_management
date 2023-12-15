@@ -8,3 +8,10 @@ def getData(request):
     suggestion =  Suggestion.objects.all()
     serializer = SuggestionSerializer(suggestion, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def create_suggestion(request):
+    serializer = SuggestionSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
