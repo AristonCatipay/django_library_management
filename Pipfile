@@ -10,6 +10,7 @@ pillow = "*"
 django-tailwind = {extras = ["reload"], version = "*"}
 psycopg2 = "*"
 django-environ = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
