@@ -1,9 +1,9 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.decorators import login_required
+from rest_framework.response import Response
+from rest_framework import status
 from suggestion.models import Suggestion
 from .serializers import SuggestionSerializer
-from rest_framework.response import Response
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -27,13 +27,17 @@ def update_suggestion(request, pk):
     try:
         suggestion = Suggestion.objects.get(pk=pk)
     except Suggestion.DoesNotExist:
-        return Response(status=404)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # Check if the logged-in user is the creator of the suggestion
+    if request.user != suggestion.created_by:
+        return Response("You don't have permission to perform this action.", status=status.HTTP_403_FORBIDDEN)
 
     serializer = SuggestionSerializer(suggestion, data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    return Response(serializer.errors, status=400)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
