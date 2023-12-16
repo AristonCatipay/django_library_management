@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from course.models import Course
+from core.permissions import IsStaffOrReadOnly
 from .serializers import CourseSerializer
 
 @api_view(['GET'])
@@ -13,7 +14,7 @@ def read_course(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
 def create_course(request):
     serializer = CourseSerializer(data=request.data)
     if serializer.is_valid():
@@ -22,7 +23,7 @@ def create_course(request):
     return Response(serializer.errors, status=400)
 
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
 def update_course(request, pk):
     try:
         course = Course.objects.get(pk=pk)
@@ -36,7 +37,7 @@ def update_course(request, pk):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
 def delete_course(request, pk):
     try:
         course = Course.objects.get(pk=pk)
