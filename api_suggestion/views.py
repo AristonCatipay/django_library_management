@@ -28,3 +28,13 @@ def update_suggestion(request, pk):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
+
+@api_view(['DELETE'])
+def delete_suggestion(request, pk):
+    try:
+        suggestion = Suggestion.objects.get(pk=pk)
+    except Suggestion.DoesNotExist:
+        return Response(status=404)
+
+    suggestion.delete()
+    return Response(status=204)
