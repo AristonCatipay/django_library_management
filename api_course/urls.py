@@ -5,4 +5,5 @@ urlpatterns = [
     path('read/', views.read_course),
     path('create/', views.create_course),
     path('update/<int:pk>/', views.update_course),
+    path('delete/<int:pk>/', views.delete_course),
 ]
