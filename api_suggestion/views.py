@@ -45,7 +45,11 @@ def delete_suggestion(request, pk):
     try:
         suggestion = Suggestion.objects.get(pk=pk)
     except Suggestion.DoesNotExist:
-        return Response(status=404)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    # Check if the logged-in user is the creator of the suggestion
+    if request.user != suggestion.created_by:
+        return Response("You don't have permission to perform this action.", status=status.HTTP_403_FORBIDDEN)
 
     suggestion.delete()
-    return Response(status=204)
+    return Response(status=status.HTTP_204_NO_CONTENT)
