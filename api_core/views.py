@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User, auth
+from django.contrib.auth import logout as django_logout
 from core.permissions import IsStaffOrReadOnly, UnauthenticatedOnly
 from .serializers import SignUpSerializer, UserSerializer
 from course.models import Course
@@ -95,3 +96,16 @@ def read_user(request):
     user = User.objects.all()
     serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    django_logout(request)
+    return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def home(request):
+    django_logout(request)
+    
+    return Response({'message': 'Logged out successfully', 'title': 'Home'}, status=status.HTTP_200_OK)
