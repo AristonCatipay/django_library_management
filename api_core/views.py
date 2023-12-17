@@ -4,10 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User, auth
 from core.permissions import IsStaffOrReadOnly, UnauthenticatedOnly
-from .serializers import SignInSerializer, SignUpSerializer
+from .serializers import SignUpSerializer, UserSerializer
 from course.models import Course
 from user_profile.models import Profile
-from course.models import Course
 from suggestion.models import Suggestion
 from book.models import Book, Author as Book_Author
 from thesis.models import Thesis , Author as Thesis_Author
@@ -90,3 +89,9 @@ def signin(request):
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_user(request):
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
+    return Response(serializer.data)
