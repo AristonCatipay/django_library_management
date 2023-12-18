@@ -4,10 +4,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from core.permissions import IsStaffOrReadOnly
 from book.models import Book, Author_List
 from review.models import Review, Reviewed_Item
 from .serializers import BookSerializer, AuthorSerializer, AuthorListSerializer, ReviewedItemSerializer
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -38,3 +38,12 @@ def read_book_detail(request, book_primary_key):
         'authors': serialized_authors,
         'book_reviews': serialized_reviews,
     })
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def create_book(request):
+    serializer = BookSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=404)
