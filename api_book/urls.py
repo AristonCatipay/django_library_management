@@ -9,4 +9,5 @@ urlpatterns = [
     path('delete/<int:book_primary_key>/', views.delete_book),
     path('author/read/', views.read_author),
     path('author/create/', views.create_author),
+    path('authorlist/read/', views.read_author_list),
 ]

@@ -80,3 +80,10 @@ def create_author(request):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_author_list(request):
+    author_list = Author_List.objects.all()
+    serializer = AuthorListSerializer(author_list, many=True)
+    return Response(serializer.data)
