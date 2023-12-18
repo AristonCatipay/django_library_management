@@ -57,3 +57,10 @@ def update_book(request, book_primary_key):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def delete_book(request, book_primary_key):
+    book = get_object_or_404(Book, id=book_primary_key)
+    book.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
