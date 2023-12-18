@@ -5,7 +5,7 @@ from rest_framework import status
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from core.permissions import IsStaffOrReadOnly
-from book.models import Book, Author_List
+from book.models import Book, Author, Author_List
 from review.models import Review, Reviewed_Item
 from .serializers import BookSerializer, AuthorSerializer, AuthorListSerializer, ReviewedItemSerializer
 
@@ -64,6 +64,13 @@ def delete_book(request, book_primary_key):
     book = get_object_or_404(Book, id=book_primary_key)
     book.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_author(request):
+    authors = Author.objects.all()
+    serializer = AuthorSerializer(authors, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated, IsStaffOrReadOnly])

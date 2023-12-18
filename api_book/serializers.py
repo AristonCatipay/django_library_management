@@ -14,7 +14,7 @@ class AuthorSerializer(serializers.ModelSerializer):
 
         # Generate title if first_name and last_name are present
         if first_name and last_name:
-            data['title'] = f"{first_name.capitalize()} {last_name.capitalize()}"
+            data['name'] = f"{first_name.capitalize()} {last_name.capitalize()}"
 
         return data
     

@@ -7,5 +7,6 @@ urlpatterns = [
     path('create/', views.create_book),
     path('update/<int:book_primary_key>/', views.update_book),
     path('delete/<int:book_primary_key>/', views.delete_book),
+    path('read/author/', views.read_author),
     path('create/author/', views.create_author),
 ]
