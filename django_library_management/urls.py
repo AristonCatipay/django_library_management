@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/review/', include('api_review.urls')),
     path('api/core/', include('api_core.urls')),
     path('api/book/', include('api_book.urls')),
+    path('api/thesis/', include('api_thesis.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
