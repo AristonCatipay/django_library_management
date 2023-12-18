@@ -13,3 +13,10 @@ def read_thesis(request):
     thesis = Thesis.objects.all()
     serializer = ThesisSerializer(thesis, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_author(request):
+    authors = Author.objects.all()
+    serializer = AuthorSerializer(authors, many=True)
+    return Response(serializer.data)
