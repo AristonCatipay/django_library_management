@@ -20,3 +20,10 @@ def read_author(request):
     authors = Author.objects.all()
     serializer = AuthorSerializer(authors, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_author_list(request):
+    author_list = Author_List.objects.all()
+    serializer = AuthorListSerializer(author_list, many=True)
+    return Response(serializer.data)
