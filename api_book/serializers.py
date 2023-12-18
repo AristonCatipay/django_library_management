@@ -7,17 +7,7 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = '__all__'
 
-class AuthorSerializer(serializers.ModelSerializer):
-    def validate(self, data):
-        first_name = data.get('first_name')
-        last_name = data.get('last_name')
-
-        # Generate title if first_name and last_name are present
-        if first_name and last_name:
-            data['name'] = f"{first_name.capitalize()} {last_name.capitalize()}"
-
-        return data
-    
+class AuthorSerializer(serializers.ModelSerializer):    
     class Meta:
         model = Author
         fields = '__all__'
