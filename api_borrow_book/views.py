@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from core.permissions import IsStaffOrReadOnly
 from book.models import Book
 from borrow_book.models import Borrow_Book
 from .serializers import BorrowBookSerializer
@@ -28,4 +29,10 @@ def create_borrow_book(request, book_primary_key):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response('You already borrowed this book.', status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_borrow_request(request):
+    book_request = Borrow_Book.objects.filter(request_status='Request')
+    serializer = BorrowBookSerializer(book_request, many=True)
+    return Response(serializer.data)
 
