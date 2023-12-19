@@ -7,6 +7,7 @@ urlpatterns = [
     path('update/<int:thesis_primary_key>/', views.update_thesis),
     path('author/read/', views.read_author),
     path('author/create/', views.create_author),
+    path('author/update/<int:author_primary_key>/', views.update_author),
     path('authorlist/read/', views.read_author_list),
     path('authorlist/create/', views.create_author_list),
 ]
