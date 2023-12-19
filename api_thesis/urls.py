@@ -10,4 +10,5 @@ urlpatterns = [
     path('author/update/<int:author_primary_key>/', views.update_author),
     path('authorlist/read/', views.read_author_list),
     path('authorlist/create/', views.create_author_list),
+    path('authorlist/update/<int:author_list_primary_key>/', views.update_author_list)
 ]

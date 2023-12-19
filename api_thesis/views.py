@@ -75,3 +75,13 @@ def create_author_list(request):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def update_author_list(request, author_list_primary_key):
+    author_list = get_object_or_404(Author_List, pk=author_list_primary_key)
+    serializer = AuthorListSerializer(author_list, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
