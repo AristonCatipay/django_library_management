@@ -12,14 +12,14 @@ from datetime import date
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def read_borrow_book(request):
+def read_borrow_book_transactions(request):
     borrow_book = Borrow_Book.objects.filter(created_by=request.user)
     serializer = BorrowBookSerializer(borrow_book, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def create_borrow_book(request, book_primary_key):
+def create_request_to_borrow_book(request, book_primary_key):
     book = get_object_or_404(Book, pk=book_primary_key)
     is_book_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
     if not is_book_borrowed:
@@ -32,14 +32,14 @@ def create_borrow_book(request, book_primary_key):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsStaffOrReadOnly])
-def read_borrow_request(request):
+def read_requests_to_borrow_book(request):
     book_request = Borrow_Book.objects.filter(request_status='Request')
     serializer = BorrowBookSerializer(book_request, many=True)
     return Response(serializer.data)
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated, IsStaffOrReadOnly])
-def approve_borrow_request(request, borrow_book_primary_key):
+def approve_borrow_book_request(request, borrow_book_primary_key):
     borrow_book = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
     if borrow_book.request_status == 'Request':
         serializer = BorrowRequestApproveSerializer(borrow_book, data=request.data)
@@ -51,7 +51,7 @@ def approve_borrow_request(request, borrow_book_primary_key):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsStaffOrReadOnly])
-def read_book_pick_up(request):
+def read_books_for_pick_up(request):
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
     serializer = BorrowBookSerializer(borrow_books, many=True)
     return Response(serializer.data)
