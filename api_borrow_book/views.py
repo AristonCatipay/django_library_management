@@ -7,7 +7,7 @@ from django.db.models import Q
 from core.permissions import IsStaffOrReadOnly
 from book.models import Book
 from borrow_book.models import Borrow_Book
-from .serializers import BorrowBookSerializer
+from .serializers import BorrowBookSerializer, BorrowRequestApproveSerializer
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -36,3 +36,14 @@ def read_borrow_request(request):
     serializer = BorrowBookSerializer(book_request, many=True)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def approve_borrow_request(request, borrow_book_primary_key):
+    borrow_book = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
+    if borrow_book.request_status == 'Request':
+        serializer = BorrowRequestApproveSerializer(borrow_book, data=request.data)
+        if serializer.is_valid():
+            serializer.save(request_status='Approved', staff_approve=request.user)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response('Invalid request.', status=status.HTTP_400_BAD_REQUEST)
