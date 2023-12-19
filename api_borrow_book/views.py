@@ -8,7 +8,7 @@ from .serializers import BorrowBookSerializer
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def read_borrow_book(request):
-    borrow_book = Borrow_Book.objects.all()
+    borrow_book = Borrow_Book.objects.filter(created_by=request.user)
     serializer = BorrowBookSerializer(borrow_book, many=True)
     return Response(serializer.data)
 
