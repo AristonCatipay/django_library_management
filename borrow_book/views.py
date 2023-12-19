@@ -17,11 +17,11 @@ def read_borrow_book_transactions(request):
     })
 
 @login_required()
-def add(request, primary_key):
-    book = get_object_or_404(Book, pk=primary_key)
+def create_request_to_borrow_book(request, book_primary_key):
+    book = get_object_or_404(Book, pk=book_primary_key)
     is_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
     if is_borrowed:
-        return redirect('book:detail', primary_key=primary_key)
+        return redirect('book:detail', primary_key=book_primary_key)
     else:
         borrow_book = Borrow_Book.objects.create(created_by=request.user, book=book)
         borrow_book.save()

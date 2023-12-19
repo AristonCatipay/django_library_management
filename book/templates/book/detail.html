@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="mt-8 rounded-xl">
-                        <a href="{% url 'borrow_book:add' book.id %}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Borrow</a>
+                        <a href="{% url 'borrow_book:create_request_to_borrow_book' book.id %}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Borrow</a>
                     </div>
                 </div>
                 <div class="hidden p-4 rounded-lg border border-gray-200 dark:border-gray-700" id="description" role="tabpanel" aria-labelledby="description-tab">
