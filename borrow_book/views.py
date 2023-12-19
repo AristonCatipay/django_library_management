@@ -17,7 +17,6 @@ def read_borrow_book_transactions(request):
     })
 
 @login_required()
-# This will add a book request
 def add(request, primary_key):
     book = get_object_or_404(Book, pk=primary_key)
     is_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
@@ -26,7 +25,7 @@ def add(request, primary_key):
     else:
         borrow_book = Borrow_Book.objects.create(created_by=request.user, book=book)
         borrow_book.save()
-        return redirect('borrow_book:index')
+        return redirect('borrow_book:read_borrow_book_transactions')
 
 @login_required()
 def borrow_request(request):
