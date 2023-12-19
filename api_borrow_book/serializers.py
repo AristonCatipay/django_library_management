@@ -10,3 +10,8 @@ class BorrowRequestApproveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrow_Book
         fields = ['pick_up_date']
+
+class BookPickUpApproveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Borrow_Book
+        fields = ['return_due_date']
