@@ -8,7 +8,7 @@ from .models import Borrow_Book
 from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm
 
 @login_required()
-def index(request):
+def read_borrow_book_transactions(request):
     borrow_books = Borrow_Book.objects.filter(created_by=request.user)
     return render(request, 'borrow_book/index.html', {
         'title': 'Borrowed Books',
