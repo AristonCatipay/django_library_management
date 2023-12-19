@@ -8,6 +8,7 @@ from core.permissions import IsStaffOrReadOnly
 from book.models import Book
 from borrow_book.models import Borrow_Book
 from .serializers import BorrowBookSerializer, BorrowRequestApproveSerializer, BookPickUpApproveSerializer
+from datetime import date
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -66,4 +67,35 @@ def approve_book_pick_up(request, borrow_book_primary_key):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
     return Response('Invalid request.', status=status.HTTP_404_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_books_for_return(request):
+    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Borrowed')
+    serializer = BorrowBookSerializer(borrow_books, many=True)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def return_book(request, borrow_book_primary_key):
+    borrow_book = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
+    if borrow_book.request_status == 'Borrowed':
+        borrow_book.request_status = 'Returned'
+        borrow_book.staff_return = request.user
+        borrow_book.returned_date = date.today()
+
+        delta = borrow_book.returned_date - borrow_book.return_due_date
+        if delta.days > 0:
+            borrow_book.pending_days = delta.days
+            borrow_book.fine = borrow_book.pending_days * 20
+        else:
+            borrow_book.pending_days = 0
+            borrow_book.fine = 0
+
+        borrow_book.save()
+        return Response({'message': 'Book returned successfully.'})
+    else:
+        return Response({'message': 'Invalid Request.'}, status=status.HTTP_404_BAD_REQUEST)
+        
+
     
