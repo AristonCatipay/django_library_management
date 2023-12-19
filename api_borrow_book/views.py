@@ -19,8 +19,8 @@ def read_borrow_book(request):
 @permission_classes([IsAuthenticated])
 def create_borrow_book(request, book_primary_key):
     book = get_object_or_404(Book, pk=book_primary_key)
-    is_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
-    if not is_borrowed:
+    is_book_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
+    if not is_book_borrowed:
         serializer = BorrowBookSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
