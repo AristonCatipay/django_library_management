@@ -47,3 +47,10 @@ def approve_borrow_request(request, borrow_book_primary_key):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response('Invalid request.', status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsStaffOrReadOnly])
+def read_book_pick_up(request):
+    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
+    serializer = BorrowBookSerializer(borrow_books, many=True)
+    return Response(serializer.data)
