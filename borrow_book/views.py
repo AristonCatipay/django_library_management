@@ -8,7 +8,7 @@ from .models import Borrow_Book
 from .forms import BorrowBookRequestApproveForm, BookPickUpApproveForm
 
 @login_required()
-def index(request):
+def read_borrow_book_transactions(request):
     borrow_books = Borrow_Book.objects.filter(created_by=request.user)
     return render(request, 'borrow_book/index.html', {
         'title': 'Borrowed Books',
@@ -17,16 +17,15 @@ def index(request):
     })
 
 @login_required()
-# This will add a book request
-def add(request, primary_key):
-    book = get_object_or_404(Book, pk=primary_key)
+def create_request_to_borrow_book(request, book_primary_key):
+    book = get_object_or_404(Book, pk=book_primary_key)
     is_borrowed = Borrow_Book.objects.filter(created_by=request.user, book=book).filter(~Q(request_status='Returned')).exists()
     if is_borrowed:
-        return redirect('book:detail', primary_key=primary_key)
+        return redirect('book:detail', primary_key=book_primary_key)
     else:
         borrow_book = Borrow_Book.objects.create(created_by=request.user, book=book)
         borrow_book.save()
-        return redirect('borrow_book:index')
+        return redirect('borrow_book:read_borrow_book_transactions')
 
 @login_required()
 def borrow_request(request):
