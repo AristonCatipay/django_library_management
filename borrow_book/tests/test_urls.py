@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User, Group
-from borrow_book.views import read_borrow_book_transactions, create_request_to_borrow_book, read_requests_to_borrow_book, approve_borrow_book_request, read_books_for_pick_up, approve_book_pick_up, read_books_for_return, return_book
+from borrow_book.views import read_borrow_book_transactions, read_all_borrow_book_transactions, create_request_to_borrow_book, read_requests_to_borrow_book, approve_borrow_book_request, read_books_for_pick_up, approve_book_pick_up, read_books_for_return, return_book
 from borrow_book.models import Borrow_Book
 from book.models import Book, Author
 from course.models import Course
@@ -52,6 +52,10 @@ class BorrowBookTestUrls(TestCase):
     def test_read_borrow_book_transactions_url(self):
         url = reverse('borrow_book:read_borrow_book_transactions')
         self.assertEquals(resolve(url).func, read_borrow_book_transactions)
+    
+    def test_read_all_borrow_book_transaction_url(self):
+        url = reverse('borrow_book:read_all_borrow_book_transactions')
+        self.assertEquals(resolve(url).func, read_all_borrow_book_transactions)
 
     def test_create_request_to_borrow_book_url(self):
         url = reverse('borrow_book:create_request_to_borrow_book', args=[self.book.pk])
