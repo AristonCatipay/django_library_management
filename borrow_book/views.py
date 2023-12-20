@@ -48,7 +48,7 @@ def borrow_request_approve(request, primary_key):
             approve.request_status = 'Approved'
             approve.staff_approve = request.user
             approve.save()
-            return redirect('borrow_book:borrow_request')
+            return redirect('borrow_book:read_requests_to_borrow_book')
     else:
         form = BorrowBookRequestApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
@@ -79,7 +79,7 @@ def book_pick_up_approve(request, primary_key):
             approve.request_status = 'Borrowed'
             approve.staff_borrow = request.user
             approve.save()
-            return redirect('borrow_book:borrow_request')
+            return redirect('borrow_book:read_requests_to_borrow_book')
     else:
         form = BookPickUpApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
@@ -111,9 +111,9 @@ def book_return_approved(request, primary_key):
         transaction.pending_days = delta.days
         transaction.fine = transaction.pending_days * 20
         transaction.save()
-        return redirect('borrow_book:borrow_request')
+        return redirect('borrow_book:read_requests_to_borrow_book')
     else:
         transaction.pending_days = 0
         transaction.fine = 0
         transaction.save()
-        return redirect('borrow_book:borrow_request')
+        return redirect('borrow_book:read_requests_to_borrow_book')
