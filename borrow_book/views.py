@@ -17,8 +17,9 @@ def read_borrow_book_transactions(request):
     })
     
 @login_required()
+@allow_certain_groups(['staff'])
 def read_requests_to_borrow_book(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
+    borrow_books = Borrow_Book.objects.filter(request_status='Request')
     return render(request, 'borrow_book/borrow_request.html', {
         'title': 'Borrow Request',
         'borrow_books': borrow_books,
@@ -38,8 +39,8 @@ def create_request_to_borrow_book(request, book_primary_key):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def borrow_request_approve(request, primary_key):
-    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+def approve_borrow_book_request(request, borrow_book_primary_key):
+    transaction = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
 
     if request.method == 'POST':
         form = BorrowBookRequestApproveForm(request.POST, instance=transaction)
