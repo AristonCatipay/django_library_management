@@ -70,8 +70,8 @@ def read_books_for_pick_up(request):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_pick_up_approve(request, primary_key):
-    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+def approve_book_pick_up(request, borrow_book_primary_key):
+    transaction = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
 
     if request.method == 'POST':
         form = BookPickUpApproveForm(request.POST, instance=transaction)
