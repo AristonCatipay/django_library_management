@@ -1,0 +1,92 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="flex justify-center">
+    <div class="w-full">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                    All Borrow Book Transactions
+                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse the list of all borrow books transactions.</p>
+                </caption>
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Title
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Status
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Created by
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Pending Days
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Fine
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Pick up date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Return due date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Returned Date
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Staff Approve
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Staff Pickup
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Staff Return
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for borrow_book in borrow_book_transactions %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ borrow_book.book.title }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.request_status }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.created_by.first_name }} {{ borrow_book.created_by.last_name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.pending_days }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.fine }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.pick_up_date }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.return_due_date }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.returned_date }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.staff_approve.first_name }} {{ borrow_book.staff_approve.last_name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.staff_borrow.first_name }} {{ borrow_book.staff_borrow.last_name }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ borrow_book.staff_return.first_name }} {{ borrow_book.staff_return.last_name }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
