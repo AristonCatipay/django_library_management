@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User, Group
-from borrow_book.views import read_borrow_book_transactions, create_request_to_borrow_book, borrow_request, borrow_request_approve, book_pick_up, book_pick_up_approve, book_return, book_return_approved
+from borrow_book.views import read_borrow_book_transactions, create_request_to_borrow_book, read_requests_to_borrow_book, approve_borrow_book_request, read_books_for_pick_up, approve_book_pick_up, read_books_for_return, return_book
 from borrow_book.models import Borrow_Book
 from book.models import Book, Author
 from course.models import Course
@@ -79,16 +79,16 @@ class BorrowBookTestView(TestCase):
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
 
-    def test_borrow_request_views(self):
+    def test_read_requests_to_borrow_book_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:borrow_request')
+        url = reverse('borrow_book:read_requests_to_borrow_book')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/borrow_request.html')
 
-    def test_borrow_request_approve_views(self):
+    def test_approve_borrow_book_request_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:borrow_request_approve', kwargs={'primary_key':self.borrow_book.pk})
+        url = reverse('borrow_book:approve_borrow_book_request', kwargs={'borrow_book_primary_key':self.borrow_book.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/form.html')
@@ -107,16 +107,16 @@ class BorrowBookTestView(TestCase):
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
 
-    def test_book_pick_up_views(self):
+    def test_read_books_for_pick_up_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:book_pick_up')
+        url = reverse('borrow_book:read_books_for_pick_up')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/book_pick_up.html')
     
-    def test_book_pick_up_approve_views(self):
+    def test_approve_book_pick_up_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:book_pick_up_approve', kwargs={'primary_key':self.borrow_book.pk})
+        url = reverse('borrow_book:approve_book_pick_up', kwargs={'borrow_book_primary_key':self.borrow_book.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/form.html')
@@ -135,16 +135,16 @@ class BorrowBookTestView(TestCase):
                 print(form.errors)
         self.assertEqual(response.status_code, 302)
 
-    def test_book_return_views(self):
+    def test_read_books_for_return_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:book_return')
+        url = reverse('borrow_book:read_books_for_return')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/return_book.html')
 
-    def test_book_return_approved_views(self):
+    def test_return_book_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:book_return_approved', kwargs={'primary_key':self.borrow_book.pk})
+        url = reverse('borrow_book:return_book', kwargs={'borrow_book_primary_key':self.borrow_book.pk})
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)
 

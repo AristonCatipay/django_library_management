@@ -15,6 +15,16 @@ def read_borrow_book_transactions(request):
         'borrow_books': borrow_books,
         'is_staff': request.is_staff,
     })
+    
+@login_required()
+@allow_certain_groups(['staff'])
+def read_requests_to_borrow_book(request):
+    borrow_books = Borrow_Book.objects.filter(request_status='Request')
+    return render(request, 'borrow_book/borrow_request.html', {
+        'title': 'Borrow Request',
+        'borrow_books': borrow_books,
+        'is_staff': request.is_staff,
+    })
 
 @login_required()
 def create_request_to_borrow_book(request, book_primary_key):
@@ -28,18 +38,9 @@ def create_request_to_borrow_book(request, book_primary_key):
         return redirect('borrow_book:read_borrow_book_transactions')
 
 @login_required()
-def borrow_request(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
-    return render(request, 'borrow_book/borrow_request.html', {
-        'title': 'Borrow Request',
-        'borrow_books': borrow_books,
-        'is_staff': request.is_staff,
-    })
-
-@login_required()
 @allow_certain_groups(['staff'])
-def borrow_request_approve(request, primary_key):
-    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+def approve_borrow_book_request(request, borrow_book_primary_key):
+    transaction = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
 
     if request.method == 'POST':
         form = BorrowBookRequestApproveForm(request.POST, instance=transaction)
@@ -48,7 +49,7 @@ def borrow_request_approve(request, primary_key):
             approve.request_status = 'Approved'
             approve.staff_approve = request.user
             approve.save()
-            return redirect('borrow_book:borrow_request')
+            return redirect('borrow_book:read_requests_to_borrow_book')
     else:
         form = BorrowBookRequestApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
@@ -59,8 +60,8 @@ def borrow_request_approve(request, primary_key):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_pick_up(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
+def read_books_for_pick_up(request):
+    borrow_books = Borrow_Book.objects.filter(request_status='Approved')
     return render(request, 'borrow_book/book_pick_up.html', {
         'title': 'Borrow Request',
         'borrow_books': borrow_books,
@@ -69,8 +70,8 @@ def book_pick_up(request):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_pick_up_approve(request, primary_key):
-    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+def approve_book_pick_up(request, borrow_book_primary_key):
+    transaction = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
 
     if request.method == 'POST':
         form = BookPickUpApproveForm(request.POST, instance=transaction)
@@ -79,7 +80,7 @@ def book_pick_up_approve(request, primary_key):
             approve.request_status = 'Borrowed'
             approve.staff_borrow = request.user
             approve.save()
-            return redirect('borrow_book:borrow_request')
+            return redirect('borrow_book:read_requests_to_borrow_book')
     else:
         form = BookPickUpApproveForm(instance=transaction)
     return render(request, 'borrow_book/form.html', {
@@ -90,8 +91,8 @@ def book_pick_up_approve(request, primary_key):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_return(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Borrowed')
+def read_books_for_return(request):
+    borrow_books = Borrow_Book.objects.filter(request_status='Borrowed')
     return render(request, 'borrow_book/return_book.html', {
         'title': 'Borrow Request',
         'borrow_books': borrow_books,
@@ -100,8 +101,8 @@ def book_return(request):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_return_approved(request, primary_key):
-    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+def return_book(request, borrow_book_primary_key):
+    transaction = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
 
     transaction.request_status = 'Returned'
     transaction.staff_return = request.user
@@ -111,9 +112,9 @@ def book_return_approved(request, primary_key):
         transaction.pending_days = delta.days
         transaction.fine = transaction.pending_days * 20
         transaction.save()
-        return redirect('borrow_book:borrow_request')
+        return redirect('borrow_book:read_requests_to_borrow_book')
     else:
         transaction.pending_days = 0
         transaction.fine = 0
         transaction.save()
-        return redirect('borrow_book:borrow_request')
+        return redirect('borrow_book:read_requests_to_borrow_book')

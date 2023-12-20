@@ -52,7 +52,7 @@ def approve_borrow_book_request(request, borrow_book_primary_key):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsStaffOrReadOnly])
 def read_books_for_pick_up(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
+    borrow_books = Borrow_Book.objects.filter(request_status='Approved')
     serializer = BorrowBookSerializer(borrow_books, many=True)
     return Response(serializer.data)
 
@@ -71,7 +71,7 @@ def approve_book_pick_up(request, borrow_book_primary_key):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated, IsStaffOrReadOnly])
 def read_books_for_return(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Borrowed')
+    borrow_books = Borrow_Book.objects.filter(request_status='Borrowed')
     serializer = BorrowBookSerializer(borrow_books, many=True)
     return Response(serializer.data)
 

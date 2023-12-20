@@ -50,7 +50,7 @@
                             {{ borrow_book.staff_approve.first_name }} {{ borrow_book.staff_approve.last_name }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="{% url 'borrow_book:book_pick_up_approve' borrow_book.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Borrow</a>
+                            <a href="{% url 'borrow_book:approve_book_pick_up' borrow_book.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Borrow</a>
                         </td>
                     </tr>
                     {% endfor %}
