@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User, Group
-from borrow_book.views import read_borrow_book_transactions, create_request_to_borrow_book, read_requests_to_borrow_book, approve_borrow_book_request, read_books_for_pick_up, approve_book_pick_up, read_books_for_return, book_return_approved
+from borrow_book.views import read_borrow_book_transactions, create_request_to_borrow_book, read_requests_to_borrow_book, approve_borrow_book_request, read_books_for_pick_up, approve_book_pick_up, read_books_for_return, return_book
 from borrow_book.models import Borrow_Book
 from book.models import Book, Author
 from course.models import Course
@@ -142,9 +142,9 @@ class BorrowBookTestView(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'borrow_book/return_book.html')
 
-    def test_book_return_approved_views(self):
+    def test_return_book_views(self):
         self.client.force_login(self.user_staff)
-        url = reverse('borrow_book:book_return_approved', kwargs={'primary_key':self.borrow_book.pk})
+        url = reverse('borrow_book:return_book', kwargs={'borrow_book_primary_key':self.borrow_book.pk})
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)
 
