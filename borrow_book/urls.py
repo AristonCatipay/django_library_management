@@ -4,6 +4,7 @@ from . import views
 app_name = 'borrow_book'
 
 urlpatterns = [
+    path('transactions/all/read/', views.read_all_borrow_book_transactions, name='read_all_borrow_book_transactions'),
     path('transactions/read/', views.read_borrow_book_transactions, name='read_borrow_book_transactions'),
     path('borrow-request/read/', views.read_requests_to_borrow_book, name='read_requests_to_borrow_book'),
     path('borrow-request/create/<int:book_primary_key>/', views.create_request_to_borrow_book, name='create_request_to_borrow_book'),
