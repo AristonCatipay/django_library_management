@@ -101,8 +101,8 @@ def read_books_for_return(request):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_return_approved(request, primary_key):
-    transaction = get_object_or_404(Borrow_Book, pk=primary_key)
+def return_book(request, borrow_book_primary_key):
+    transaction = get_object_or_404(Borrow_Book, pk=borrow_book_primary_key)
 
     transaction.request_status = 'Returned'
     transaction.staff_return = request.user
