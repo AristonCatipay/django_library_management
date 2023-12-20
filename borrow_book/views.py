@@ -60,7 +60,7 @@ def approve_borrow_book_request(request, borrow_book_primary_key):
 
 @login_required()
 @allow_certain_groups(['staff'])
-def book_pick_up(request):
+def read_books_for_pick_up(request):
     borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Approved')
     return render(request, 'borrow_book/book_pick_up.html', {
         'title': 'Borrow Request',
