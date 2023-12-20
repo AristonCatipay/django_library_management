@@ -10,6 +10,6 @@ urlpatterns = [
     path('borrow-request-approve/<int:borrow_book_primary_key>/', views.approve_borrow_book_request, name='approve_borrow_book_request'),
     path('for-pickup/read/', views.read_books_for_pick_up, name='read_books_for_pick_up'),
     path('for-pickup/approve/<int:borrow_book_primary_key>/', views.approve_book_pick_up, name='approve_book_pick_up'),
-    path('book-return/', views.book_return, name='book_return'),
+    path('for-return/read/', views.read_books_for_return, name='read_books_for_return'),
     path('book-return-approved/<int:primary_key>/', views.book_return_approved, name='book_return_approved'),
 ]
