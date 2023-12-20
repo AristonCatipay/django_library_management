@@ -15,6 +15,16 @@ def read_borrow_book_transactions(request):
         'borrow_books': borrow_books,
         'is_staff': request.is_staff,
     })
+
+@login_required()
+@allow_certain_groups(['staff'])
+def read_all_borrow_book_transactions(request):
+    borrow_book_transactions = Borrow_Book.objects.all()
+    return render(request, 'borrow_book/borrow_book_transactions.html', {
+        'title': 'Transactions',
+        'borrow_book_transactions': borrow_book_transactions,
+        'is_staff': request.is_staff,
+    })
     
 @login_required()
 @allow_certain_groups(['staff'])
