@@ -15,6 +15,15 @@ def read_borrow_book_transactions(request):
         'borrow_books': borrow_books,
         'is_staff': request.is_staff,
     })
+    
+@login_required()
+def read_requests_to_borrow_book(request):
+    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
+    return render(request, 'borrow_book/borrow_request.html', {
+        'title': 'Borrow Request',
+        'borrow_books': borrow_books,
+        'is_staff': request.is_staff,
+    })
 
 @login_required()
 def create_request_to_borrow_book(request, book_primary_key):
@@ -26,15 +35,6 @@ def create_request_to_borrow_book(request, book_primary_key):
         borrow_book = Borrow_Book.objects.create(created_by=request.user, book=book)
         borrow_book.save()
         return redirect('borrow_book:read_borrow_book_transactions')
-
-@login_required()
-def borrow_request(request):
-    borrow_books = Borrow_Book.objects.filter(created_by=request.user).filter(request_status='Request')
-    return render(request, 'borrow_book/borrow_request.html', {
-        'title': 'Borrow Request',
-        'borrow_books': borrow_books,
-        'is_staff': request.is_staff,
-    })
 
 @login_required()
 @allow_certain_groups(['staff'])
