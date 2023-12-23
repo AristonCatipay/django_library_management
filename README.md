@@ -40,6 +40,11 @@ Install Django
 pipenv install django
 ```
 
+Install Django REST Framework
+```bash
+pipenv install djangorestframework
+```
+
 Install Pillow
 ```bash
 pipenv install pillow
