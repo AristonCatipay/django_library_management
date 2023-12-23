@@ -120,5 +120,10 @@ Create a new course named 'Not Specified' and abbreviation of 'NS'.
 
 You can now start using the app normally.
 
+### Contact
+For any inquiries or feedback, feel free to contact the project maintainers:
+
+- Ariston Catipay - aristoncatipay123@gmail.com
+
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
