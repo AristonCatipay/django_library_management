@@ -1,8 +1,9 @@
 ![Librify](/readme_images/librify.png)
 # Librify - Simplifying Library Management with Django
 
-Librify is a Django-based library management system that enables students to efficiently search and filter through the library's collection of books and theses and allows them to borrow books and view theses files. It also allows librarians and staff to facilitate the smooth handling of book borrowing, return processes, and overdue notifications while managing the catalog of books and theses.
+Librify is a Django-based library management system that enables students to efficiently search and filter through the library's collection of books and theses and allows them to borrow books and view theses files. It also allows librarians and staff to facilitate the smooth handling of book borrowing, return processes, and overdue notifications while managing the catalog of books and theses. You can use the built-in front end using Django templates or interact with the system via API.
 
+### Features
 - Comprehensive Search and Filter: Students can effortlessly search and filter through the library's diverse collection of books and theses, ensuring easy access to relevant resources.
 
 - Borrowing and Thesis Viewing: Enables students to borrow books and access thesis files, promoting a smoother learning experience.
