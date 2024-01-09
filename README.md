@@ -104,27 +104,10 @@ Migrate
 python manage.py migrate
 ```
 
-### After you migrate to your database.
-
 Start the server
 ```bash
 python manage.py runserver
 ```
-
-Create a super user.
-```bash
-python manage.py createsuperuser
-```
-
-Go to the admin page and login using the super user.
-
-![Admin_Login](/readme_images/admin_login.png)
-
-Create a new course named 'Not Specified' and abbreviation of 'NS'.
-
-![Add_default_course](/readme_images/add_course_not_specified.png)
-
-You can now start using the app normally.
 
 ### Contact
 For any inquiries or feedback, feel free to contact the project maintainers:
