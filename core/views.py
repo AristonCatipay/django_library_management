@@ -91,14 +91,22 @@ def signup(request):
                 auth.login(request, credentials)
                 # Create the user profile.
                 user = User.objects.get(username=username)
-                course = Course.objects.get(abbreviation='NS')
-                profile = Profile.objects.create(user=user, course=course)
-                # Add user to the student group
-                group = Group.objects.get(name='student')
-                user.groups.add(group)
-                profile.save()
-
-                return redirect('book:index')
+                if Course.objects.filter(abbreviation='NS').exists():
+                    course = Course.objects.get(abbreviation='NS')
+                    profile = Profile.objects.create(user=user, course=course)
+                    # Add user to the student group
+                    group = Group.objects.get(name='student')
+                    user.groups.add(group)
+                    profile.save()
+                    return redirect('book:index')
+                else:
+                    course = Course.objects.create(name='Not Specified', abbreviation='NS')
+                    profile = Profile.objects.create(user=user, course=course)
+                    # Add user to the student group
+                    group = Group.objects.get(name='student')
+                    user.groups.add(group)
+                    profile.save()
+                    return redirect('book:index')
         else:
             messages.info(request, 'Password don\'t match')
             return redirect('core:signup')
