@@ -28,6 +28,12 @@ To use this application you have to clone this repository using git bash.
 git clone https://github.com/AristonCatipay/django_library_management.git
 ```
 
+### Install Dependencies using `requirements.txt`
+Install project dependencies
+```bash
+pip install -r requirements
+```
+
 ### Install Dependencies
 
 Activate virtual environment
