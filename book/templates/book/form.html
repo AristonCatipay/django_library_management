@@ -22,7 +22,126 @@
             {% endfor %}
             
             <div class="space-y-6 text-white">
-                {{ form.as_p }}
+                {% for field in form %}
+                    {% if field.name == 'title' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                        <path d="M16 14V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 0 0 0-2h-1v-2a2 2 0 0 0 2-2ZM4 2h2v12H4V2Zm8 16H3a1 1 0 0 1 0-2h9v2Z"/>
+                                    </svg>
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'cover_image' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'overview_image' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'table_of_contents_image' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'isbn_number' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                    </svg>
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'date_published' %}
+                        <div class="col-span-2">
+                            <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex items-center gap-4">
+                                {{ form.date_published }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'inventory' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                                        <path d="M19 0H1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1ZM2 6v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6H2Zm11 3a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 2 0h2a1 1 0 0 1 2 0v1Z"/>
+                                    </svg>
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'rack_number' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                                    </svg>
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'rack_level_number' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h12M8 5h5M8 9h5M1 13h12M1 5v4l3-2-3-2Z"/>
+                                    </svg>                                      
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 <button class="w-full text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Submit</button>
             </div>
         </form>      
