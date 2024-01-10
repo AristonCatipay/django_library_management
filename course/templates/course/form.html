@@ -2,30 +2,67 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <div class="flex justify-center">
-    <div class="w-full max-w-xl p-6 bg-white border border-gray-200 rounded-md shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div
+        class="w-full max-w-xl p-6 bg-white border border-gray-200 rounded-md shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         <h1 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">{{ title }}</h1>
         <form action="." method="post">
             {% csrf_token %}
 
             {% for field in form %}
-                {% if field.errors %}
-                <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-                    <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                    </svg>
-                    <span class="sr-only">Info</span>
-                    <div>
-                        <span class="font-medium">{{ field.label_tag }} {{ field.errors }}</span>
-                    </div>
+            {% if field.errors %}
+            <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="sr-only">Info</span>
+                <div>
+                    <span class="font-medium">{{ field.label_tag }} {{ field.errors }}</span>
                 </div>
-                {% endif %}
+            </div>
+            {% endif %}
             {% endfor %}
-            
+
+
             <div class="space-y-6 text-white">
-                {{ form.as_p }}
+                {% for field in form %}
+                    {% if field.name == 'name' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                                        <path d="M17 16h-1V2a1 1 0 1 0 0-2H2a1 1 0 0 0 0 2v14H1a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM5 4a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4Zm0 5V8a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Zm6 7H7v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm2-7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1Zm0-4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1Z"/>
+                                    </svg>
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if field.name == 'abbreviation' %}
+                        <div>
+                            <label for="{{ field.id_for_label }}"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ field.label }}</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-l-lg dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 17V1m0 0L1 4m3-3 3 3m4-3h6l-6 6h6m-7 10 3.5-7 3.5 7m-6.125-2H16"/>
+                                    </svg>
+                                </span>
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
                 <button class="w-full text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Submit</button>
             </div>
-        </form>      
+        </form>
     </div>
 </div>
 {% endblock %}
