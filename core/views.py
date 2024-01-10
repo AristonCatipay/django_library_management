@@ -123,14 +123,10 @@ def logout(request):
 @login_required
 @allow_certain_groups(allowed_groups=['staff'])
 def users(request):
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-
-    users = User.objects.all()
+    users = User.objects.filter(is_superuser=False)
 
     return render(request, 'core/users.html', {
         'title': 'Users',
-        'profile': profile,
         'is_staff': request.is_staff,
         'users': users,
     })
