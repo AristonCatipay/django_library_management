@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from .forms import BookForm, AuthorForm, AuthorListForm
@@ -39,6 +40,7 @@ def add(request):
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The book has been added.')
             return redirect('book:index')
     else:
         form = BookForm()
@@ -56,6 +58,7 @@ def edit(request, primary_key):
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The book has been edited.')
             return redirect('book:detail', primary_key=primary_key)
     else:
         form = BookForm(instance=book)
@@ -75,6 +78,7 @@ def add_author(request):
             author = form.save(commit=False)
             author.name = f"{request.POST['first_name'].capitalize()}  {request.POST['last_name'].capitalize()}"
             author.save()
+            messages.success(request, 'Success! The author has been added.')
             return redirect('book:index')
     else:
         form = AuthorForm()
@@ -93,6 +97,7 @@ def add_author_in_author_list(request, primary_key):
             author_list = form.save(commit=False)
             author_list.book_id = primary_key
             author_list.save()
+            messages.success(request, 'Success! The author has been added to the author list.')
             return redirect('book:index')
     else:
         form = AuthorListForm()
