@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Suggestion
 from .form import SuggestionForm
@@ -20,6 +21,7 @@ def add(request):
             suggestion = form.save(commit=False)
             suggestion.created_by = request.user
             suggestion.save()
+            messages.success(request, 'Success! The suggestion has been added.')
             return redirect('suggestion:index')
     else:
         form = SuggestionForm()
@@ -36,6 +38,7 @@ def edit(request, primary_key):
         form = SuggestionForm(request.POST, instance=suggestion)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The suggestion has been edited.')
             return redirect('suggestion:index')
     else:
         form = SuggestionForm(instance=suggestion)
