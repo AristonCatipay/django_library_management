@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import BookReviewForm
 from .models import Reviewed_Item
@@ -19,6 +20,7 @@ def add(request, book_id):
             book = Book.objects.get(pk=book_id)
             book_review = Reviewed_Item.objects.create(book=book, review=review)
             book_review.save()
+            messages.success(request, 'Success! The review has been added.')
             return redirect('borrow_book:index')
     else:
         form = BookReviewForm()
