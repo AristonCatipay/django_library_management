@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.http import FileResponse, Http404
@@ -52,6 +53,7 @@ def add(request):
         form = ThesisForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The thesis has been added.')
             return redirect('thesis:index')
     else:
         form = ThesisForm()
@@ -69,6 +71,7 @@ def edit(request, primary_key):
         form = ThesisForm(request.POST, request.FILES, instance=thesis)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The thesis has been edited.')
             return redirect('thesis:detail', primary_key=primary_key)
     else:
         form = ThesisForm(instance=thesis)
@@ -87,6 +90,7 @@ def add_author(request):
             author = form.save(commit=False)
             author.name = f"{request.POST['first_name'].capitalize()} {request.POST['last_name'].capitalize()}"
             author.save()
+            messages.success(request, 'Success! The author has been added.')
             return redirect('thesis:index')
     else:
         form = AuthorForm()
@@ -106,6 +110,7 @@ def add_author_in_author_list(request, primary_key):
             author = form.save(commit=False)
             author.thesis_id = primary_key
             author.save()
+            messages.success(request, 'Success! The author has been added to the book\'s author list.')
             return redirect('thesis:detail', primary_key=primary_key) 
     else:
         form = AuthorListForm()

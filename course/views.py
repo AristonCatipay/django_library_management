@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from core.decorators import allow_certain_groups
 from .models import Course
 from .forms import CourseForm
@@ -20,7 +21,10 @@ def add(request):
         form = CourseForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The course has been successfully added!')
             return redirect('course:index')
+        else:
+            messages.error(request, 'Oops! Something went wrong while trying to add the course.')
     else:
         form = CourseForm()
     return render(request, 'course/form.html', {
@@ -37,7 +41,10 @@ def edit(request, primary_key):
         form = CourseForm(request.POST, instance=course)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Success! The course has been successfully edited!')
             return redirect('course:index')
+        else:
+            messages.error(request, 'Oops! Something went wrong while trying to edit the course.')
     else:
         form = CourseForm(instance=course)
     return render(request, 'course/form.html', {
@@ -51,4 +58,5 @@ def edit(request, primary_key):
 def delete(request, primary_key):
     course = get_object_or_404(Course, pk=primary_key)
     course.delete()
+    messages.success(request, 'Success! The course has been successfully deleted!')
     return redirect('course:index')

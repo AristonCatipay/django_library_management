@@ -55,10 +55,11 @@ def signin(request):
         if user is not None:
             # User is authenticated.
             auth.login(request, user)
+            messages.success(request, 'Login successful. Welcome back!')
             return redirect('book:index')
         else: 
             # Invalid credentials
-            messages.info(request, 'Invalid credentials.')
+            messages.error(request, 'Invalid credentials. Please check your username and password.')
             return redirect('core:signin')
             
     return render(request, 'core/signin.html', {
@@ -77,10 +78,10 @@ def signup(request):
 
         if password == confirm_password:
             if User.objects.filter(email=email).exists():
-                messages.info(request, 'Email is already taken.')
+                messages.error(request, 'Email is already taken.')
                 return redirect('core:signup')
             elif User.objects.filter(username=username).exists():
-                messages.info(request, 'Username is already taken.')
+                messages.error(request, 'Username is already taken.')
                 return redirect('core:signup')
             else:
                 # Create the user
@@ -106,6 +107,7 @@ def signup(request):
                     group = Group.objects.get(name='student')
                     user.groups.add(group)
                     profile.save()
+                    messages.success(request, 'Account created successfully! Welcome to our community.')
                     return redirect('book:index')
         else:
             messages.info(request, 'Password don\'t match')
@@ -118,6 +120,7 @@ def signup(request):
 
 def logout(request):
     auth.logout(request)
+    messages.success(request, 'Logout successful. Have a great day!')
     return redirect('core:signin')
 
 @login_required

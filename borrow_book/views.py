@@ -1,6 +1,7 @@
 from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db.models import Q
 from book.models import Book
 from core.decorators import allow_certain_groups
@@ -45,6 +46,7 @@ def create_request_to_borrow_book(request, book_primary_key):
     else:
         borrow_book = Borrow_Book.objects.create(created_by=request.user, book=book)
         borrow_book.save()
+        messages.success(request, f'Success! Your request to borrow the book {book.title} has been received. We will review your request and notify you shortly.')
         return redirect('borrow_book:read_borrow_book_transactions')
 
 @login_required()
@@ -59,6 +61,7 @@ def approve_borrow_book_request(request, borrow_book_primary_key):
             approve.request_status = 'Approved'
             approve.staff_approve = request.user
             approve.save()
+            messages.success(request, 'Success! Borrow book request has been approved.')
             return redirect('borrow_book:read_all_borrow_book_transactions')
     else:
         form = BorrowBookRequestApproveForm(instance=transaction)
@@ -90,6 +93,7 @@ def approve_book_pick_up(request, borrow_book_primary_key):
             approve.request_status = 'Borrowed'
             approve.staff_borrow = request.user
             approve.save()
+            messages.success(request, 'Success! Book pickup has been approved.')
             return redirect('borrow_book:read_all_borrow_book_transactions')
     else:
         form = BookPickUpApproveForm(instance=transaction)
@@ -122,9 +126,11 @@ def return_book(request, borrow_book_primary_key):
         transaction.pending_days = delta.days
         transaction.fine = transaction.pending_days * 20
         transaction.save()
+        messages.success(request, 'Success! Book has been returned.')
         return redirect('borrow_book:read_all_borrow_book_transactions')
     else:
         transaction.pending_days = 0
         transaction.fine = 0
         transaction.save()
+        messages.success(request, 'Success! Book has been returned.')
         return redirect('borrow_book:read_all_borrow_book_transactions')
