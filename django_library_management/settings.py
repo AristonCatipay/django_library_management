@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'core',
     'user_profile',
+    'address',
     'course',
     'book',
     'thesis',
