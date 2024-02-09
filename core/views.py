@@ -96,16 +96,22 @@ def signup(request):
                     course = Course.objects.get(abbreviation='NS')
                     profile = Profile.objects.create(user=user, course=course)
                     # Add user to the student group
-                    group = Group.objects.get(name='student')
-                    user.groups.add(group)
+                    group_student = Group.objects.get(name='student')
+                    user.groups.add(group_student)
                     profile.save()
+                    messages.success(request, 'Account created successfully! Welcome to our community.')
                     return redirect('book:index')
                 else:
                     course = Course.objects.create(name='Not Specified', abbreviation='NS')
                     profile = Profile.objects.create(user=user, course=course)
+
                     # Add user to the student group
-                    group = Group.objects.get(name='student')
-                    user.groups.add(group)
+                    group_teacher, created_teacher = Group.objects.get_or_create(name='teacher')
+                    group_student, created_student = Group.objects.get_or_create(name='student')
+
+                    # Make sure to use group objects, not tuples
+                    user.groups.add(group_student)
+
                     profile.save()
                     messages.success(request, 'Account created successfully! Welcome to our community.')
                     return redirect('book:index')
