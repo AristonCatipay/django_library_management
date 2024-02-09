@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from course.models import Course
+from address.models import Region, Province, City_Municipality, Barangay
  
 class Profile(models.Model):
     MALE = 'M'
@@ -19,3 +20,11 @@ class Profile(models.Model):
     student_contact_no = models.CharField(max_length=15, unique=True, null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, related_name='course_id', on_delete=models.CASCADE)
+    location = models.CharField(max_length=100, blank=True)
+    barangay = models.ForeignKey(Barangay, on_delete=models.SET_NULL, null=True)
+    city_municipality = models.ForeignKey(City_Municipality, on_delete=models.SET_NULL, null=True)
+    province = models.ForeignKey(Province, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.user.username
