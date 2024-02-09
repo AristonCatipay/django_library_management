@@ -10,7 +10,7 @@ def index(request):
     })
 
 @login_required
-def edit(request):
+def update_profile(request):
     if request.method == 'POST':
         user = request.user
         profile = user.profile
@@ -39,13 +39,13 @@ def edit(request):
         messages.success(request, 'Success! The profile has been edited.')
         return redirect('profile:edit')
 
-    return render(request, 'user_profile/edit.html', {
+    return render(request, 'user_profile/update_profile.html', {
         'title': 'Edit Profile',
         'is_staff': request.is_staff,
     })
 
 @login_required
-def change_password(request):
+def update_password(request):
     if request.method == 'POST':
         old_password = request.POST['old_password'] 
         new_password = request.POST['new_password'] 
@@ -64,7 +64,7 @@ def change_password(request):
             messages.error(request, 'Failed to update password. Old password does not match.')
             return redirect('profile:change_password')
             
-    return render(request, 'user_profile/change_password.html', {
+    return render(request, 'user_profile/update_password.html', {
         'title': 'Change Password',
         'is_staff': request.is_staff,
     })
