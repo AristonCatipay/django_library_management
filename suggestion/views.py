@@ -5,9 +5,9 @@ from .models import Suggestion
 from .form import SuggestionForm
 
 @login_required
-def index(request):
+def view_suggestion(request):
     suggestions = Suggestion.objects.filter(created_by=request.user)
-    return render(request, 'suggestion/index.html', {
+    return render(request, 'suggestion/suggestion.html', {
         'title': 'Suggestion',
         'suggestions': suggestions,
         'is_staff': request.is_staff,
@@ -22,7 +22,7 @@ def add(request):
             suggestion.created_by = request.user
             suggestion.save()
             messages.success(request, 'Success! The suggestion has been added.')
-            return redirect('suggestion:index')
+            return redirect('suggestion:view_suggestion')
     else:
         form = SuggestionForm()
     return render(request, 'suggestion/form.html', {
@@ -39,7 +39,7 @@ def edit(request, primary_key):
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The suggestion has been edited.')
-            return redirect('suggestion:index')
+            return redirect('suggestion:view_suggestion')
     else:
         form = SuggestionForm(instance=suggestion)
 
