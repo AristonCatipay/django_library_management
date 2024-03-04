@@ -16,13 +16,13 @@ def view_course(request):
 
 @login_required
 @allow_certain_groups(['staff'])
-def add(request):
+def create_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The course has been successfully added!')
-            return redirect('course:index')
+            return redirect('course:view_course')
         else:
             messages.error(request, 'Oops! Something went wrong while trying to add the course.')
     else:
@@ -42,7 +42,7 @@ def edit(request, primary_key):
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The course has been successfully edited!')
-            return redirect('course:index')
+            return redirect('course:view_course')
         else:
             messages.error(request, 'Oops! Something went wrong while trying to edit the course.')
     else:
@@ -59,4 +59,4 @@ def delete(request, primary_key):
     course = get_object_or_404(Course, pk=primary_key)
     course.delete()
     messages.success(request, 'Success! The course has been successfully deleted!')
-    return redirect('course:index')
+    return redirect('course:view_course')
