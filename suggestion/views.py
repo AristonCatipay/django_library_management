@@ -14,7 +14,7 @@ def view_suggestion(request):
     })
 
 @login_required
-def add(request):
+def create_suggestion(request):
     if request.method == 'POST':
         form = SuggestionForm(request.POST)
         if form.is_valid():
