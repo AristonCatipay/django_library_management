@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from review.views import add
+from review.views import create_review
 from book.models import Book
 
 class ReviewTestUrls(TestCase):
@@ -16,7 +16,7 @@ class ReviewTestUrls(TestCase):
 
     def test_add_url(self):
         url = reverse('review:add', args=[self.book.pk])
-        self.assertEquals(resolve(url).func, add)
+        self.assertEquals(resolve(url).func, create_review)
 
     def tearDown(self):
         self.book.delete()

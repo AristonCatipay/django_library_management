@@ -6,7 +6,7 @@ from .models import Reviewed_Item
 from book.models import Book
 
 @login_required
-def add(request, book_id):
+def create_review(request, book_id):
     if request.method == 'POST':
         form = BookReviewForm(request.POST)
         if form.is_valid():
