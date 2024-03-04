@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from thesis.views import index, add, detail, edit, add_author, add_author_in_author_list
+from thesis.views import view_thesis, add, view_thesis_detail, edit, add_author, add_author_in_author_list
 from thesis.models import Thesis, Author
 from course.models import Course
 
@@ -23,7 +23,7 @@ class ThesisTestUrls(TestCase):
 
     def test_index_url(self):
         url = reverse('thesis:index')
-        self.assertEquals(resolve(url).func, index)
+        self.assertEquals(resolve(url).func, view_thesis)
 
     def test_add_url(self):
         url = reverse('thesis:add')
@@ -31,7 +31,7 @@ class ThesisTestUrls(TestCase):
     
     def test_detail_url(self):
         url = reverse('thesis:detail', args=[self.thesis.pk])
-        self.assertEquals(resolve(url).func, detail)
+        self.assertEquals(resolve(url).func, view_thesis_detail)
 
     def test_edit_url(self):
         url = reverse('thesis:edit', args=[self.thesis.pk])

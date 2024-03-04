@@ -4,8 +4,8 @@ from django.contrib import messages
 from address.models import Region, Province, City_Municipality, Barangay
 
 @login_required
-def index(request):
-    return render(request, 'profile/index.html', {
+def view_profile(request):
+    return render(request, 'profile/view_profile.html', {
         'title': 'Profile',
         'is_staff': request.is_staff,
     })
@@ -38,7 +38,7 @@ def update_profile(request):
         profile.save()
         user.save()
         messages.success(request, 'Success! The profile has been edited.')
-        return redirect('profile:edit')
+        return redirect('profile:update_profile')
 
     return render(request, 'profile/update_profile.html', {
         'title': 'Edit Profile',
@@ -105,22 +105,29 @@ def load_barangay(request):
 @login_required
 def update_password(request):
     if request.method == 'POST':
-        old_password = request.POST['old_password'] 
-        new_password = request.POST['new_password'] 
-        confirm_new_password = request.POST['confirm_new_password'] 
+        try:
+            old_password = request.POST['old_password'] 
+            new_password = request.POST['new_password']
+            confirm_new_password = request.POST['confirm_new_password'] 
 
-        if request.user.check_password(old_password):
-            if new_password == confirm_new_password:
-                request.user.set_password(new_password)
-                request.user.save()
-                messages.success(request, 'Success! The password has been edited.')
-                return redirect('core:signin')
+            if request.user.check_password(old_password):
+                if not request.user.check_password(new_password):
+                    if new_password == confirm_new_password:
+                        request.user.set_password(new_password)
+                        request.user.save()
+                        messages.success(request, 'Password updated successfully!')
+                        return redirect('core:signin')
+                    else:
+                        messages.error(request, 'Failed to update password. New password does not match.')
+                        return redirect('profile:update_password')
+                else:
+                    messages.error(request, 'Failed to update password. New password cannot be the old password.')
+                    return redirect('profile:update_password')
             else:
-                messages.error(request, 'Failed to update password. Password don\'t match')
-                return redirect('profile:change_password')
-        else:
-            messages.error(request, 'Failed to update password. Old password does not match.')
-            return redirect('profile:change_password')
+                messages.error(request, 'Failed to update password. Old password does not match.')
+                return redirect('profile:update_password')
+        except Exception as e:
+            messages.error(request, f'Failed to update password. {e}')
             
     return render(request, 'profile/update_password.html', {
         'title': 'Change Password',

@@ -5,16 +5,16 @@ from .models import Suggestion
 from .form import SuggestionForm
 
 @login_required
-def index(request):
+def view_suggestion(request):
     suggestions = Suggestion.objects.filter(created_by=request.user)
-    return render(request, 'suggestion/index.html', {
+    return render(request, 'suggestion/suggestion.html', {
         'title': 'Suggestion',
         'suggestions': suggestions,
         'is_staff': request.is_staff,
     })
 
 @login_required
-def add(request):
+def create_suggestion(request):
     if request.method == 'POST':
         form = SuggestionForm(request.POST)
         if form.is_valid():
@@ -22,7 +22,7 @@ def add(request):
             suggestion.created_by = request.user
             suggestion.save()
             messages.success(request, 'Success! The suggestion has been added.')
-            return redirect('suggestion:index')
+            return redirect('suggestion:view_suggestion')
     else:
         form = SuggestionForm()
     return render(request, 'suggestion/form.html', {
@@ -32,14 +32,14 @@ def add(request):
     })
 
 @login_required
-def edit(request, primary_key):
+def update_suggestion(request, primary_key):
     suggestion = get_object_or_404(Suggestion, id=primary_key)
     if request.method == 'POST':
         form = SuggestionForm(request.POST, instance=suggestion)
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The suggestion has been edited.')
-            return redirect('suggestion:index')
+            return redirect('suggestion:view_suggestion')
     else:
         form = SuggestionForm(instance=suggestion)
 

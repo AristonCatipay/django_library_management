@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from user_profile.models import Profile
 from course.models import Course
 from book.models import Book
-from review.views import add
+from review.views import create_review
 
 class ReviewTestView(TestCase):
     def setUp(self):

@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
-from suggestion.views import index, add, edit
+from suggestion.views import index, create_suggestion, edit
 from suggestion.models import Suggestion
 
 class SuggestionTestUrls(TestCase):
@@ -25,7 +25,7 @@ class SuggestionTestUrls(TestCase):
 
     def test_add_url(self):
         url = reverse('suggestion:add')
-        self.assertEquals(resolve(url).func, add)
+        self.assertEquals(resolve(url).func, create_suggestion)
 
     def test_edit_url(self):
         url = reverse('suggestion:edit', args=[self.suggestion.pk])
