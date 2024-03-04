@@ -28,11 +28,11 @@ def view_thesis(request):
     })
 
 @login_required
-def detail(request, primary_key):
+def view_thesis_detail(request, primary_key):
     thesis = get_object_or_404(Thesis, pk=primary_key)
     authors = Author_List.objects.filter(thesis_id=primary_key)
     
-    return render(request, 'thesis/detail.html', {
+    return render(request, 'thesis/view_thesis_detail.html', {
         'title': 'Thesis Detail',
         'thesis': thesis,
         'authors': authors,
