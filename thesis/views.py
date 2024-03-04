@@ -9,7 +9,7 @@ from .models import Thesis, Author_List
 from .forms import ThesisForm, AuthorForm, AuthorListForm
 
 @login_required
-def index(request):
+def view_thesis(request):
     theses = Thesis.objects.all()
     courses = Course.objects.all()
 
@@ -20,7 +20,7 @@ def index(request):
         theses = Thesis.objects.filter(course=course_id)
     if query: 
         theses = Thesis.objects.filter(Q(title__icontains=query))
-    return render(request, 'thesis/index.html', {
+    return render(request, 'thesis/view_thesis.html', {
         'title': 'Thesis',
         'is_staff': request.is_staff,
         'theses': theses,
@@ -54,7 +54,7 @@ def add(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The thesis has been added.')
-            return redirect('thesis:index')
+            return redirect('thesis:view_thesis')
     else:
         form = ThesisForm()
     return render(request, 'thesis/form.html', {
@@ -91,7 +91,7 @@ def add_author(request):
             author.name = f"{request.POST['first_name'].capitalize()} {request.POST['last_name'].capitalize()}"
             author.save()
             messages.success(request, 'Success! The author has been added.')
-            return redirect('thesis:index')
+            return redirect('thesis:view_thesis')
     else:
         form = AuthorForm()
 
