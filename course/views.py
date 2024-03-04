@@ -35,7 +35,7 @@ def create_course(request):
 
 @login_required
 @allow_certain_groups(['staff'])
-def edit(request, primary_key):
+def update_course(request, primary_key):
     course = get_object_or_404(Course, pk=primary_key)
     if request.method == 'POST':
         form = CourseForm(request.POST, instance=course)
