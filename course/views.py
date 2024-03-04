@@ -55,7 +55,7 @@ def update_course(request, primary_key):
 
 @login_required
 @allow_certain_groups(['staff'])
-def delete(request, primary_key):
+def delete_course(request, primary_key):
     course = get_object_or_404(Course, pk=primary_key)
     course.delete()
     messages.success(request, 'Success! The course has been successfully deleted!')

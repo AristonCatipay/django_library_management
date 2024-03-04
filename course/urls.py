@@ -7,5 +7,5 @@ urlpatterns = [
     path('', views.view_course, name='view_course'),
     path('create/', views.create_course, name='create_course'),
     path('update/<int:primary_key>/', views.update_course, name='update_course'),
-    path('delete/<int:primary_key>/', views.delete, name='delete'),
+    path('delete/<int:primary_key>/', views.delete_course, name='delete_course'),
 ]
