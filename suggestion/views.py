@@ -32,7 +32,7 @@ def create_suggestion(request):
     })
 
 @login_required
-def edit(request, primary_key):
+def update_suggestion(request, primary_key):
     suggestion = get_object_or_404(Suggestion, id=primary_key)
     if request.method == 'POST':
         form = SuggestionForm(request.POST, instance=suggestion)
