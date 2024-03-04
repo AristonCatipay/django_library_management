@@ -4,8 +4,8 @@ from django.contrib import messages
 from address.models import Region, Province, City_Municipality, Barangay
 
 @login_required
-def index(request):
-    return render(request, 'profile/index.html', {
+def view_profile(request):
+    return render(request, 'profile/view_profile.html', {
         'title': 'Profile',
         'is_staff': request.is_staff,
     })
@@ -38,7 +38,7 @@ def update_profile(request):
         profile.save()
         user.save()
         messages.success(request, 'Success! The profile has been edited.')
-        return redirect('profile:edit')
+        return redirect('profile:update_profile')
 
     return render(request, 'profile/update_profile.html', {
         'title': 'Edit Profile',
