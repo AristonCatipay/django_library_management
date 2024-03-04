@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from course.views import index, add, edit, delete
+from course.views import view_course, add, edit, delete
 from course.models import Course
 
 class CourseTestUrls(TestCase):
@@ -9,7 +9,7 @@ class CourseTestUrls(TestCase):
 
     def test_index_url(self):
         url = reverse('course:index')
-        self.assertEquals(resolve(url).func, index)
+        self.assertEquals(resolve(url).func, view_course)
 
     def test_add_url(self):
         url = reverse('course:add')

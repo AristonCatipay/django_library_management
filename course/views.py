@@ -6,9 +6,9 @@ from .models import Course
 from .forms import CourseForm
 
 @login_required
-def index(request):
+def view_course(request):
     courses = Course.objects.all()
-    return render(request, 'course/index.html', {
+    return render(request, 'course/course.html', {
         'title': 'Course',
         'is_staff': request.is_staff,
         'courses': courses,
