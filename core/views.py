@@ -56,7 +56,7 @@ def signin(request):
             # User is authenticated.
             auth.login(request, user)
             messages.success(request, 'Login successful. Welcome back!')
-            return redirect('book:index')
+            return redirect('book:view_book')
         else: 
             # Invalid credentials
             messages.error(request, 'Invalid credentials. Please check your username and password.')

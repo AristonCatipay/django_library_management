@@ -8,13 +8,13 @@ from core.decorators import allow_certain_groups
 from review.models import Reviewed_Item
 
 @login_required()
-def index(request):
+def view_book(request):
     books = Book.objects.all()
 
     query = request.GET.get('query', '')
     if query: 
         books = Book.objects.filter(Q(title__icontains=query) | Q(isbn_number__icontains=query))
-    return render(request, 'book/index.html', {
+    return render(request, 'book/view_book.html', {
         'title': 'Book',
         'books': books,
         'is_staff': request.is_staff,
