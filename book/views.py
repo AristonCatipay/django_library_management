@@ -35,13 +35,13 @@ def view_book_detail(request, book_primary_key):
 
 @login_required()
 @allow_certain_groups(allowed_groups=['staff'])
-def add(request):
+def create_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The book has been added.')
-            return redirect('book:index')
+            return redirect('book:view_book')
     else:
         form = BookForm()
     return render(request, 'book/form.html', {
@@ -59,7 +59,7 @@ def edit(request, primary_key):
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The book has been edited.')
-            return redirect('book:detail', primary_key=primary_key)
+            return redirect('book:view_book_detail', primary_key=primary_key)
     else:
         form = BookForm(instance=book)
 
@@ -79,7 +79,7 @@ def add_author(request):
             author.name = f"{request.POST['first_name'].capitalize()}  {request.POST['last_name'].capitalize()}"
             author.save()
             messages.success(request, 'Success! The author has been added.')
-            return redirect('book:index')
+            return redirect('book:view_book')
     else:
         form = AuthorForm()
     return render(request, 'book/form.html', {
@@ -98,7 +98,7 @@ def add_author_in_author_list(request, primary_key):
             author_list.book_id = primary_key
             author_list.save()
             messages.success(request, 'Success! The author has been added to the author list.')
-            return redirect('book:index')
+            return redirect('book:view_book')
     else:
         form = AuthorListForm()
 

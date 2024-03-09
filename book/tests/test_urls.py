@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
-from book.views import view_book, add, view_book_detail, edit, add_author, add_author_in_author_list
+from book.views import view_book, create_book, view_book_detail, edit, add_author, add_author_in_author_list
 from book.models import Book, Author, Author_List
 
 class BookTestUrls(TestCase):
@@ -26,7 +26,7 @@ class BookTestUrls(TestCase):
 
     def test_add_url(self):
         url = reverse('book:add')
-        self.assertEquals(resolve(url).func, add)
+        self.assertEquals(resolve(url).func, create_book)
     
     def test_detail_url(self):
         url = reverse('book:detail', args=[self.book.pk])
