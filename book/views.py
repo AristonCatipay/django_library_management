@@ -21,11 +21,11 @@ def view_book(request):
     })
 
 @login_required()
-def detail(request, primary_key):
-    book = get_object_or_404(Book, pk=primary_key)
-    authors = Author_List.objects.filter(book_id=primary_key)
-    book_reviews = Reviewed_Item.objects.filter(book_id=primary_key)
-    return render(request, 'book/detail.html', {
+def view_book_detail(request, book_primary_key):
+    book = get_object_or_404(Book, pk=book_primary_key)
+    authors = Author_List.objects.filter(book_id=book_primary_key)
+    book_reviews = Reviewed_Item.objects.filter(book_id=book_primary_key)
+    return render(request, 'book/view_book_detail.html', {
         'title': 'Book Detail',
         'is_staff': request.is_staff,
         'book': book,

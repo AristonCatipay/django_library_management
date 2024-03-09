@@ -32,7 +32,7 @@
     <!-- Card for each book. -->
     {% for book in books %}
     <div class="rounded-lg bg-gray-50 dark:bg-gray-800">
-        <a href="{% url 'book:detail' book.id %}">
+        <a href="{% url 'book:view_book_detail' book.id %}">
             <img src="{{ book.cover_image.url }}" class="h-64 w-full object-cover rounded-t-lg">
             <div class="p-6 rounded-b-lg">
                 <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ book.title }}</h2>
