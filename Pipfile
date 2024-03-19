@@ -5,12 +5,10 @@ name = "pypi"
 
 [packages]
 django = "*"
-mysqlclient = "*"
+django-tailwind = "*"
 pillow = "*"
-django-tailwind = {extras = ["reload"], version = "*"}
-psycopg2 = "*"
-django-environ = "*"
-djangorestframework = "*"
+django-browser-reload = "*"
+mysqlclient = "*"
 
 [dev-packages]
 
