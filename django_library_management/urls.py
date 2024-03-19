@@ -33,6 +33,5 @@ urlpatterns = [
     path('borrow-book/', include('borrow_book.urls')),
     path('review/', include('review.urls')),
     path('api/suggestion/', include('api_suggestion.urls')),
-    path('api/review/', include('api_review.urls')),
     path('api/thesis/', include('api_thesis.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
