@@ -114,7 +114,7 @@ def signup(request):
 
                     profile.save()
                     messages.success(request, 'Account created successfully! Welcome to our community.')
-                    return redirect('book:index')
+                    return redirect('book:view_book')
         else:
             messages.info(request, 'Password don\'t match')
             return redirect('core:signup')
