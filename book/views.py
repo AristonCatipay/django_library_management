@@ -8,7 +8,7 @@ from core.decorators import allow_certain_groups
 from review.models import Reviewed_Item
 
 @login_required()
-def view_book(request):
+def read_book(request):
     books = Book.objects.all()
 
     query = request.GET.get('query', '')
@@ -21,7 +21,7 @@ def view_book(request):
     })
 
 @login_required()
-def view_book_detail(request, book_primary_key):
+def read_book_detail(request, book_primary_key):
     book = get_object_or_404(Book, pk=book_primary_key)
     authors = Author_List.objects.filter(book_id=book_primary_key)
     book_reviews = Reviewed_Item.objects.filter(book_id=book_primary_key)
@@ -41,7 +41,7 @@ def create_book(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The book has been added.')
-            return redirect('book:view_book')
+            return redirect('book:read_book')
     else:
         form = BookForm()
     return render(request, 'book/form.html', {
@@ -79,7 +79,7 @@ def add_author(request):
             author.name = f"{request.POST['first_name'].capitalize()}  {request.POST['last_name'].capitalize()}"
             author.save()
             messages.success(request, 'Success! The author has been added.')
-            return redirect('book:view_book')
+            return redirect('book:read_book')
     else:
         form = AuthorForm()
     return render(request, 'book/form.html', {
@@ -98,7 +98,7 @@ def add_author_in_author_list(request, primary_key):
             author_list.book_id = primary_key
             author_list.save()
             messages.success(request, 'Success! The author has been added to the author list.')
-            return redirect('book:view_book')
+            return redirect('book:read_book')
     else:
         form = AuthorListForm()
 
