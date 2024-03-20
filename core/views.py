@@ -56,7 +56,7 @@ def signin(request):
             # User is authenticated.
             auth.login(request, user)
             messages.success(request, 'Login successful. Welcome back!')
-            return redirect('book:view_book')
+            return redirect('book:read_book')
         else: 
             # Invalid credentials
             messages.error(request, 'Invalid credentials. Please check your username and password.')
@@ -100,7 +100,7 @@ def signup(request):
                     user.groups.add(group_student)
                     profile.save()
                     messages.success(request, 'Account created successfully! Welcome to our community.')
-                    return redirect('book:index')
+                    return redirect('book:read_book')
                 else:
                     course = Course.objects.create(name='Not Specified', abbreviation='NS')
                     profile = Profile.objects.create(user=user, course=course)
@@ -114,7 +114,7 @@ def signup(request):
 
                     profile.save()
                     messages.success(request, 'Account created successfully! Welcome to our community.')
-                    return redirect('book:view_book')
+                    return redirect('book:read_book')
         else:
             messages.info(request, 'Password don\'t match')
             return redirect('core:signup')

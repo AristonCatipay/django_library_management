@@ -2,13 +2,13 @@
 {% block title %}{{ title }}{% endblock %}
 {% block content %}
 <div class="w-full mb-4">
-    <form method="get" action="{% url 'book:view_book' %}">
+    <form method="get" action="{% url 'book:read_book' %}">
         <div class="flex">
             <div class="relative w-full">
                 <input type="text" name="query" value="{{ query }}" id="search-dropdown"
                     class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                     placeholder="Enter book name or ISBN number..." required>
-                <a href="{% url 'book:view_book' %}" type="button"
+                <a href="{% url 'book:read_book' %}" type="button"
                     class="absolute inset-y-0 right-0 flex items-center pr-3">
                     <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
