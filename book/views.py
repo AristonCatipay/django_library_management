@@ -52,14 +52,14 @@ def create_book(request):
 
 @login_required()
 @allow_certain_groups(allowed_groups=['staff'])
-def edit(request, primary_key):
-    book = get_object_or_404(Book, pk=primary_key)
+def update_book(request, book_primary_key):
+    book = get_object_or_404(Book, pk=book_primary_key)
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             form.save()
             messages.success(request, 'Success! The book has been edited.')
-            return redirect('book:view_book_detail', primary_key=primary_key)
+            return redirect('book:read_book_detail', book_primary_key=book_primary_key)
     else:
         form = BookForm(instance=book)
 
