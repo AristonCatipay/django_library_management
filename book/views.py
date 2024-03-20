@@ -21,7 +21,7 @@ def read_book(request):
     })
 
 @login_required()
-def view_book_detail(request, book_primary_key):
+def read_book_detail(request, book_primary_key):
     book = get_object_or_404(Book, pk=book_primary_key)
     authors = Author_List.objects.filter(book_id=book_primary_key)
     book_reviews = Reviewed_Item.objects.filter(book_id=book_primary_key)
