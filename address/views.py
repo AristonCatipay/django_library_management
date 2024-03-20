@@ -34,8 +34,8 @@ def create_region(request):
     })
 
 @login_required
-def update_region(request, primary_key):
-    region = get_object_or_404(Region, id = primary_key)
+def update_region(request, region_primary_key):
+    region = get_object_or_404(Region, pk=region_primary_key)
 
     if request.method == 'POST':
         form = RegionForm(request.POST, instance=region)
@@ -87,8 +87,8 @@ def create_province(request):
     })
 
 @login_required
-def update_province(request, primary_key):
-    province = get_object_or_404(Province, id = primary_key)
+def update_province(request, province_primary_key):
+    province = get_object_or_404(Province, pk=province_primary_key)
 
     if request.method == 'POST':
         form = ProvinceForm(request.POST, instance=province)
@@ -140,8 +140,8 @@ def create_city_municipality(request):
     })
 
 @login_required
-def update_city_municipality(request, primary_key):
-    city_municipality = get_object_or_404(City_Municipality, id = primary_key)
+def update_city_municipality(request, city_municipality_primary_key):
+    city_municipality = get_object_or_404(City_Municipality, pk=city_municipality_primary_key)
 
     if request.method == 'POST':
         form = CityMunicipalityForm(request.POST, instance=city_municipality)
@@ -193,8 +193,8 @@ def create_barangay(request):
     })
 
 @login_required
-def update_barangay(request, primary_key):
-    barangay = get_object_or_404(Barangay, id = primary_key)
+def update_barangay(request, barangay_primary_key):
+    barangay = get_object_or_404(Barangay, pk=barangay_primary_key)
 
     if request.method == 'POST':
         form = BarangayForm(request.POST, instance=barangay)
